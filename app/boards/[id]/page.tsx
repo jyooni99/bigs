@@ -1,0 +1,12 @@
+import BoardDetail from "@/src/components/board-detail";
+
+interface BoardDetailPageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function BoardDetailPage({ params }: BoardDetailPageProps) {
+  const { id } = await params;
+  console.log(id);
+
+  return <BoardDetail />;
+}

@@ -8,9 +8,9 @@ export default function Header() {
   const user: User | null = null;
 
   return (
-    <header className="w-full border-b border-gray-200 dark:border-gray-800">
+    <header className="bg-white dark:bg-gray-900 w-full border-b border-gray-200 dark:border-gray-800 fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-black">
+        <Link href="/" className="text-2xl font-black hover:text-sky-500 transition-all">
           BigsBoard
         </Link>
 

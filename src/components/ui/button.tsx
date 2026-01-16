@@ -11,9 +11,9 @@ const buttonVariants = cva(
         primary: "bg-sky-500 text-white hover:bg-sky-600",
         secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
         primaryOutline:
-          "bg-transparent text-gray-800 border border-sky-600 hover:bg-sky-100",
+          "bg-transparent text-sky-500 border border-sky-500 hover:text-sky-700 hover:border-sky-700",
         secondaryOutline:
-          "bg-transparent text-gray-800 border border-gray-600 hover:bg-gray-100",
+          "bg-transparent text-gray-600 border border-gray-600 hover:text-gray-800 hover:border-gray-800",
         icon: "hover:bg-gray-100 dark:hover:bg-gray-700",
       },
       size: {
