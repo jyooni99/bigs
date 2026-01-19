@@ -1,5 +1,6 @@
 import { api } from "@/src/apis/api";
-import { LoginRequest, LoginResponse, SignupRequest } from "@/src/types/auth";
+import { LoginRequest, SignupRequest } from "@/src/schemas/auth";
+import { LoginResponse } from "@/src/types/auth";
 
 export const authAPI = {
   signup: (data: SignupRequest) => api.post("/auth/signup", data),

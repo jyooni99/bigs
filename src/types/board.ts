@@ -12,6 +12,7 @@ export interface Board {
   content: string;
   boardCategory: BoardCategory;
   imageUrl?: string;
+  createdAt: string;
 }
 
 export interface BoardDetail {
@@ -42,13 +43,6 @@ export interface BoardsResponse {
   sort: Sort;
   first: boolean;
   empty: boolean;
-}
-
-export interface CreateBoardRequest {
-  title: string;
-  content: string;
-  category: BoardCategory;
-  image?: File;
 }
 
 export interface UpdateBoardRequest {

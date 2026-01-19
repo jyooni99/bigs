@@ -1,5 +1,10 @@
+import { confirmPassword, name, password, username } from "@/src/schemas/schema";
 import z from "zod";
-import { confirmPassword, name, password, username } from "./schema";
+
+export const LoginSchema = z.object({
+  username: username,
+  password: confirmPassword,
+});
 
 export const SignupSchema = z
   .object({
@@ -13,4 +18,5 @@ export const SignupSchema = z
     message: "비밀번호가 일치하지 않습니다.",
   });
 
-export type SignupForm = z.infer<typeof SignupSchema>;
+export type LoginRequest = z.infer<typeof LoginSchema>;
+export type SignupRequest = z.infer<typeof SignupSchema>;

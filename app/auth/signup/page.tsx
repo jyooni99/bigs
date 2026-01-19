@@ -4,7 +4,7 @@ import { authAPI } from "@/src/apis/auth";
 import Button from "@/src/components/ui/button";
 import Input from "@/src/components/ui/input";
 import { parseServerError } from "@/src/lib/parse-server-error";
-import { SignupForm, SignupSchema } from "@/src/schemas/signup";
+import { SignupRequest, SignupSchema } from "@/src/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,24 +20,24 @@ export default function SignupPage() {
     trigger,
     getValues,
     formState: { errors, isValid, touchedFields },
-  } = useForm<SignupForm>({
+  } = useForm<SignupRequest>({
     resolver: zodResolver(SignupSchema),
     mode: "onTouched",
   });
 
-  const onSubmit = async (data: SignupForm) => {
+  const onSubmit = async (data: SignupRequest) => {
     try {
       const response = await authAPI.signup(data);
 
       if (response.status === 200) {
-        router.push("/login");
+        router.push("/auth/login");
       }
     } catch (error) {
       const fieldErrors = parseServerError(error);
 
       if (fieldErrors) {
         const [field, message] = Object.entries(fieldErrors)[0];
-        setError(field as keyof SignupForm, { type: "server", message });
+        setError(field as keyof SignupRequest, { type: "server", message });
       }
     }
   };

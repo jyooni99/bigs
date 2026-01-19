@@ -20,3 +20,22 @@ export const password = z
   .refine((pw) => /[!%*#?&]/.test(pw), "특수문자(!%*#?&)를 포함해주세요.");
 
 export const confirmPassword = z.string().min(1, "비밀번호를 입력해주세요.");
+
+export const title = z
+  .string()
+  .min(1, "제목을 입력해주세요.")
+  .max(100, "제목은 100자 이하여야 합니다.");
+
+export const content = z
+  .string()
+  .min(1, "내용을 입력해주세요.")
+  .max(1000, "내용은 1000자 이하여야 합니다.");
+
+export const category = z.enum(["NOTICE", "FREE", "QNA", "ETC"]);
+
+export const image = z
+  .instanceof(File)
+  .refine(
+    (file) => file.size <= 10 * 1024 * 1024,
+    "이미지 파일 크기는 10MB 이하여야 합니다."
+  );

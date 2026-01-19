@@ -5,9 +5,8 @@ import Button from "@/src/components/ui/button";
 import Input from "@/src/components/ui/input";
 import { getUser } from "@/src/lib/get-user";
 import { parseServerMessage } from "@/src/lib/parse-server-error";
-import { LoginForm, LoginSchema } from "@/src/schemas/login";
+import { LoginRequest, LoginSchema } from "@/src/schemas/auth";
 import { useAuthStore } from "@/src/stores/auth-store";
-import { LoginRequest } from "@/src/types/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -23,7 +22,7 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { isValid, errors },
-  } = useForm<LoginForm>({
+  } = useForm<LoginRequest>({
     resolver: zodResolver(LoginSchema),
     mode: "onTouched",
   });
