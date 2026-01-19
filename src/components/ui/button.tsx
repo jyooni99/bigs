@@ -4,16 +4,16 @@ import { cva, VariantProps } from "class-variance-authority";
 import { ComponentProps } from "react";
 
 const buttonVariants = cva(
-  "cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
+  "cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 transition-colors flex items-center justify-center",
   {
     variants: {
       variant: {
         primary: "bg-sky-500 text-white hover:bg-sky-600",
         secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
         primaryOutline:
-          "bg-transparent text-sky-500 border border-sky-500 hover:text-sky-700 hover:border-sky-700",
+          "bg-transparent text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white",
         secondaryOutline:
-          "bg-transparent text-gray-600 border border-gray-600 hover:text-gray-800 hover:border-gray-800",
+          "bg-transparent text-gray-600 border border-gray-600 hover:bg-gray-600 hover:text-white",
         icon: "hover:bg-gray-100 dark:hover:bg-gray-700",
       },
       size: {

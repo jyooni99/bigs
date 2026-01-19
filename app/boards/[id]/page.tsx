@@ -8,5 +8,5 @@ export default async function BoardDetailPage({ params }: BoardDetailPageProps) 
   const { id } = await params;
   console.log(id);
 
-  return <BoardDetail />;
+  return <BoardDetail id={id} />;
 }

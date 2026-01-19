@@ -1,45 +1,47 @@
+"use client";
+
+import { boardsAPI } from "@/src/apis/board";
+import BoardListSkeleton from "@/src/components/skeleton/board-list-skeleton";
+import StatusView from "@/src/components/status-view";
+import Button from "@/src/components/ui/button";
+import formatDate from "@/src/lib/formatter";
+import { Board } from "@/src/types/board";
+import { useQuery } from "@tanstack/react-query";
+import { PenBox } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Board } from "../types/board";
 
 export default function BoardList() {
-  const boards: Board[] = [
-    {
-      id: "1",
-      title: "게시글 테스트1",
-      content: "게시글 테스트1 내용",
-      category: "게시글 테스트1",
-      createdAt: "2023.07.20",
-      file: undefined,
-    },
-    {
-      id: "2",
-      title: "게시글 테스트2",
-      content: "게시글 테스트2 내용",
-      category: "게시글 테스트2",
-      createdAt: "2023.06.20",
-      file: undefined,
-    },
-    {
-      id: "3",
-      title: "게시글 테스트3",
-      content: "게시글 테스트3 내용",
-      category: "게시글 테스트3",
-      createdAt: "2023.05.20",
-      file: undefined,
-    },
-  ];
+  const { data: boards, isLoading } = useQuery({
+    queryKey: ["boards"],
+    queryFn: () => boardsAPI.getBoards(),
+  });
+
+  if (isLoading) return <BoardListSkeleton />;
+
+  if (!boards?.data?.content.length)
+    return (
+      <div className="pt-10">
+        <StatusView
+          title="게시글이 없습니다."
+          description="게시글을 작성해주세요."
+          icon={<PenBox className="size-8" />}
+        >
+          <Button asChild variant="primaryOutline" size="lg">
+            <Link href="/boards/create">게시글 작성</Link>
+          </Button>
+        </StatusView>
+      </div>
+    );
 
   return (
-    <>
-      <div className="space-y-4 mb-8 mt-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {boards.map((board) => (
-            <BoardItem key={board.id} board={board} />
-          ))}
-        </div>
+    <div className="space-y-4 mb-8 mt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {boards.data.content.map((board) => (
+          <BoardItem key={board.id} board={board} />
+        ))}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -50,9 +52,9 @@ const BoardItem = ({ board }: { board: Board }) => {
       className="block bg-white group dark:bg-gray-800 rounded-lg overflow-hidden transition-shadow duration-300 border border-gray-200 dark:border-gray-700"
     >
       <div className="relative aspect-4/3 bg-gray-100 dark:bg-gray-800">
-        {board.file ? (
+        {board.imageUrl ? (
           <Image
-            src={board.file}
+            src={board.imageUrl}
             alt={board.title}
             fill
             className="object-cover hover:scale-105 transition-all duration-300"
@@ -60,7 +62,7 @@ const BoardItem = ({ board }: { board: Board }) => {
         ) : (
           <div className="absolute inset-0 flex flex-col items-start justify-between py-8 px-4">
             <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
-              {board.category}
+              {board.boardCategory}
             </span>
 
             <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 leading-tight">
@@ -80,7 +82,7 @@ const BoardItem = ({ board }: { board: Board }) => {
         </p>
 
         <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-500">
-          <span>{board.createdAt}</span>
+          <span>{formatDate(board.createdAt)}</span>
         </div>
       </div>
     </Link>

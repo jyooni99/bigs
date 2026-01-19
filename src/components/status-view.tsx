@@ -4,12 +4,12 @@ interface StatusViewProps {
   title: string;
   description: string;
   icon: React.ReactNode;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const StatusView = ({ title, description, icon, children }: StatusViewProps) => {
   return (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="flex flex-col justify-center items-center py-10">
       <div className="flex flex-col items-center justify-center">
         {icon}
         <h2 className="text-2xl font-bold mt-4">{title}</h2>
