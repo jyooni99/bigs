@@ -1,5 +1,6 @@
 import Footer from "@/src/components/footer";
 import Header from "@/src/components/header";
+import QueryProvider from "@/src/lib/query-provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -25,12 +26,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Header />
-        <main className="container mx-auto px-4 py-8 min-h-screen mt-16">{children}</main>
-        <Footer />
-      </body>
-    </html>
+    <QueryProvider>
+      <html lang="ko">
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <Header />
+          <main className="container mx-auto px-4 py-8 min-h-screen mt-16">
+            {children}
+          </main>
+          <Footer />
+        </body>
+      </html>
+    </QueryProvider>
   );
 }
