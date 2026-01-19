@@ -1,27 +1,45 @@
 "use client";
 
+import { authAPI } from "@/src/apis/auth";
 import Button from "@/src/components/ui/button";
 import Input from "@/src/components/ui/input";
-import { SignupRequest } from "@/src/types/auth";
+import parseServerError from "@/src/lib/parse-server-error";
+import { SignupForm, SignupSchema } from "@/src/schemas/signup";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function SignupPage() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
-    formState: { isValid },
-  } = useForm<SignupRequest>({
-    defaultValues: {
-      username: "",
-      name: "",
-      password: "",
-      confirmPassword: "",
-    },
+    setError,
+    trigger,
+    getValues,
+    formState: { errors, isValid, touchedFields },
+  } = useForm<SignupForm>({
+    resolver: zodResolver(SignupSchema),
+    mode: "onTouched",
   });
 
-  const onSubmit = (data: SignupRequest) => {
-    console.log(data);
+  const onSubmit = async (data: SignupForm) => {
+    try {
+      const response = await authAPI.signup(data);
+
+      if (response.status === 200) {
+        router.push("/login");
+      }
+    } catch (error) {
+      const fieldErrors = parseServerError(error);
+
+      if (fieldErrors) {
+        const [field, message] = Object.entries(fieldErrors)[0];
+        setError(field as keyof SignupForm, { type: "server", message });
+      }
+    }
   };
 
   return (
@@ -32,21 +50,36 @@ export default function SignupPage() {
         <Input
           label="이메일"
           placeholder="이메일을 입력해주세요."
+          errorMessage={errors.username?.message}
           {...register("username")}
         />
-        <Input label="이름" placeholder="이름을 입력해주세요." {...register("name")} />
+        <Input
+          label="이름"
+          placeholder="이름을 입력해주세요."
+          errorMessage={errors.name?.message}
+          {...register("name")}
+        />
         <Input
           label="비밀번호"
           type="password"
           placeholder="비밀번호를 입력해주세요."
           showPasswordToggle
-          {...register("password")}
+          errorMessage={errors.password?.message}
+          helperText="8~20자 / 영문, 숫자, 특수문자(!%*#?&)를 각각 1개 이상 포함"
+          {...register("password", {
+            onChange: () => {
+              if (touchedFields.confirmPassword || getValues("confirmPassword")) {
+                trigger("confirmPassword");
+              }
+            },
+          })}
         />
         <Input
           label="비밀번호 확인"
           type="password"
           placeholder="비밀번호를 확인해주세요."
           showPasswordToggle
+          errorMessage={errors.confirmPassword?.message}
           {...register("confirmPassword")}
         />
 
