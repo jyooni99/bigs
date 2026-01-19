@@ -11,13 +11,31 @@ interface AuthState {
   logout: () => void;
 }
 
+const getInitialAuthState = (): boolean => {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  try {
+    const stored = localStorage.getItem("auth-storage");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      return parsed.state?.isAuthenticated ?? false;
+    }
+  } catch (error) {
+    console.error("Failed to parse auth storage:", error);
+  }
+
+  return false;
+};
+
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
       accessToken: null,
       refreshToken: null,
-      isAuthenticated: false,
+      isAuthenticated: getInitialAuthState(),
 
       setAuth: (user, accessToken, refreshToken) => {
         set({ user, accessToken, refreshToken, isAuthenticated: true });
