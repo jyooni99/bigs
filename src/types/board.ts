@@ -1,30 +1,67 @@
+export type BoardCategory = "NOTICE" | "FREE" | "QNA" | "ETC";
+
+export interface Sort {
+  sorted: boolean;
+  unsorted: boolean;
+  empty: boolean;
+}
+
 export interface Board {
-  id: string;
+  id: number;
   title: string;
   content: string;
-  category: string;
-  file?: string;
+  boardCategory: BoardCategory;
+  imageUrl?: string;
+}
+
+export interface BoardDetail {
+  id: number;
+  title: string;
+  content: string;
+  boardCategory: BoardCategory;
+  imageUrl?: string;
   createdAt: string;
-  updatedAt?: string;
 }
 
-export interface BoardCreateRequest {
+export interface BoardsResponse {
+  content: Board[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: Sort;
+    offset: number;
+    unpaged: boolean;
+    paged: boolean;
+  };
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  numberOfElements: number;
+  size: number;
+  number: number;
+  sort: Sort;
+  first: boolean;
+  empty: boolean;
+}
+
+export interface CreateBoardRequest {
   title: string;
   content: string;
-  category: string;
-  file?: File | null;
+  category: BoardCategory;
+  image?: File;
 }
 
-export interface BoardUpdateRequest {
+export interface UpdateBoardRequest {
   title: string;
   content: string;
-  category?: string;
-  file?: File | null;
+  category: BoardCategory;
+  image?: File;
 }
 
-export interface BoardListResponse {
-  boards: Board[];
-  total: number;
-  page: number;
-  limit: number;
+export interface Categories {
+  [key: string]: string;
+  NOTICE: string;
+  FREE: string;
+  QNA: string;
+  ETC: string;
 }
