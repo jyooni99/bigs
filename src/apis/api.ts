@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/src/stores/auth-store";
 import axios from "axios";
 import { authAPI } from "./auth";
 
@@ -12,16 +13,18 @@ export const api = axios.create({
 
 export const privateApi = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "multipart/form-data",
-  },
 });
 
 privateApi.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken");
+  const token = useAuthStore.getState().accessToken;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
+  if (!(config.data instanceof FormData)) {
+    config.headers["Content-Type"] = "application/json";
+  }
+
   return config;
 });
 
@@ -33,28 +36,43 @@ privateApi.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    // 401 처리: 리프레시 토큰 사용해서 액세스 토큰 재발급
+    if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const refreshToken = localStorage.getItem("refreshToken");
+      const { refreshToken, setAuth, logout } = useAuthStore.getState();
 
       if (!refreshToken) {
-        localStorage.clear();
-        window.location.href = "/login";
+        logout();
+        window.location.href = "/auth/login";
         return Promise.reject(error);
       }
 
       try {
         const { data } = await authAPI.refresh(refreshToken);
 
-        localStorage.setItem("accessToken", data.accessToken);
+        const currentUser = useAuthStore.getState().user;
+        if (currentUser) {
+          setAuth(currentUser, data.accessToken, refreshToken);
+        }
+
         originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
 
         return privateApi.request(originalRequest);
       } catch (refreshError) {
-        localStorage.clear();
-        window.location.href = "/login";
+        logout();
+        window.location.href = "/auth/login";
         return Promise.reject(refreshError);
+      }
+    }
+
+    // 403 처리: 엑세스 토큰이 없으면 로그인 페이지로 이동
+    if (error.response?.status === 403) {
+      const token = useAuthStore.getState().accessToken;
+
+      if (!token) {
+        useAuthStore.getState().logout();
+        window.location.href = "/auth/login";
       }
     }
 
