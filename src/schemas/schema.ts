@@ -18,3 +18,5 @@ export const password = z
   .refine((pw) => /[a-zA-Z]/.test(pw), "영문자를 포함해주세요.")
   .refine((pw) => /[0-9]/.test(pw), "숫자를 포함해주세요.")
   .refine((pw) => /[!%*#?&]/.test(pw), "특수문자(!%*#?&)를 포함해주세요.");
+
+export const confirmPassword = z.string().min(1, "비밀번호를 입력해주세요.");

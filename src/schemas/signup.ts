@@ -1,12 +1,12 @@
 import z from "zod";
-import { name, password, username } from "./schema";
+import { confirmPassword, name, password, username } from "./schema";
 
 export const SignupSchema = z
   .object({
     username: username,
     name: name,
     password: password,
-    confirmPassword: z.string(),
+    confirmPassword: confirmPassword,
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confirmPassword"],
