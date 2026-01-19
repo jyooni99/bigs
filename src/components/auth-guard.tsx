@@ -12,11 +12,12 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (!hasHydrated) return;
 
-    const isGuestRoute = pathname.startsWith("/auth");
+    const isGuestOnlyRoute = pathname.startsWith("/auth");
+    const isProtectedRoute = pathname.startsWith("/boards");
 
-    if (isGuestRoute && isAuthenticated) {
+    if (isGuestOnlyRoute && isAuthenticated) {
       router.replace("/");
-    } else if (!isGuestRoute && !isAuthenticated) {
+    } else if (isProtectedRoute && !isAuthenticated) {
       router.replace("/auth/login");
     }
   }, [pathname, isAuthenticated, hasHydrated, router]);
