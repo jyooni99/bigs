@@ -3,7 +3,7 @@
 import { authAPI } from "@/src/apis/auth";
 import Button from "@/src/components/ui/button";
 import Input from "@/src/components/ui/input";
-import parseServerError from "@/src/lib/parse-server-error";
+import { parseServerError } from "@/src/lib/parse-server-error";
 import { SignupForm, SignupSchema } from "@/src/schemas/signup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -98,7 +98,10 @@ export default function SignupPage() {
 
       <div className="mt-4 text-center text-sm">
         <span className="text-gray-600 dark:text-gray-400">이미 계정이 있으신가요? </span>
-        <Link href="/login" className="text-sky-600 dark:text-sky-400 hover:underline">
+        <Link
+          href="/auth/login"
+          className="text-sky-600 dark:text-sky-400 hover:underline"
+        >
           로그인
         </Link>
       </div>
