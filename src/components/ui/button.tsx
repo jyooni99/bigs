@@ -15,6 +15,7 @@ const buttonVariants = cva(
         secondaryOutline:
           "bg-transparent text-gray-600 border border-gray-600 hover:bg-gray-600 hover:text-white",
         icon: "hover:bg-gray-100 dark:hover:bg-gray-700",
+        none: "bg-transparent"
       },
       size: {
         sm: "text-sm px-4 py-2 rounded-md",
