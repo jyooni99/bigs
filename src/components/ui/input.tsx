@@ -5,6 +5,7 @@ import { cn } from "@/src/lib/cn";
 import { Eye, EyeOff } from "lucide-react";
 import { ComponentProps, useState } from "react";
 import Button from "./button";
+import Label from "./label";
 
 interface InputProps extends ComponentProps<"input"> {
   label: string;
@@ -28,9 +29,7 @@ const Input = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={label} className="text-sm font-medium">
-        {label}
-      </label>
+      <Label htmlFor={label} text={label} />
       <div className="relative">
         <input
           type={inputType}
@@ -67,7 +66,7 @@ const Input = ({
       {errorMessage ? (
         <p className="text-sm text-red-500 dark:text-red-400">{errorMessage}</p>
       ) : helperText ? (
-        <p className="text-sm text-gray-500 dark:text-gray-400">{helperText}</p>
+        <p className="text-sm text-zinc-400 dark:text-zinc-400">{helperText}</p>
       ) : null}
     </div>
   );
