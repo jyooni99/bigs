@@ -49,7 +49,7 @@ export interface UpdateBoardRequest {
   title: string;
   content: string;
   category: BoardCategory;
-  image?: File;
+  file?: File | string;
 }
 
 export interface Categories {

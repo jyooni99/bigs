@@ -1,11 +1,11 @@
 import { privateApi } from "@/src/apis/api";
+import { CreateBoardRequest, UpdateBoardRequest } from "@/src/schemas/board";
 import {
   BoardDetail,
   BoardsResponse,
   Categories,
-  CreateBoardRequest,
-  UpdateBoardRequest,
 } from "@/src/types/board";
+
 
 export const boardsAPI = {
   getBoards: (page: number = 0, size: number = 10) =>
@@ -14,12 +14,16 @@ export const boardsAPI = {
   getBoard: (id: number) => privateApi.get<BoardDetail>(`/boards/${id}`),
 
   createBoard: (data: CreateBoardRequest) => {
+    const { file, ...request } = data;
+
     const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("content", data.content);
-    formData.append("category", data.category);
-    if (data.image) {
-      formData.append("image", data.image);
+    formData.append(
+      "request",
+      new Blob([JSON.stringify(request)], { type: "application/json" })
+    );
+
+    if (file) {
+      formData.append("file", file);
     }
 
     return privateApi.post<BoardDetail>("/boards", formData);
@@ -27,11 +31,15 @@ export const boardsAPI = {
 
   updateBoard: (id: number, data: UpdateBoardRequest) => {
     const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("content", data.content);
-    formData.append("category", data.category);
-    if (data.image) {
-      formData.append("image", data.image);
+    const { file, ...request } = data;
+
+    formData.append(
+      "request",
+      new Blob([JSON.stringify(request)], { type: "application/json" })
+    );
+
+    if (file) {
+      formData.append("file", file);
     }
 
     return privateApi.patch<BoardDetail>(`/boards/${id}`, formData);
