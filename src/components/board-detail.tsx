@@ -25,6 +25,14 @@ export default function BoardDetail({ id }: { id: string }) {
     return `${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`;
   };
 
+  const handleDeleteBoard = (id: string) => {
+    boardsAPI.deleteBoard(Number(id)).then(() => {
+      router.push("/");
+    }).catch((error) => {
+      console.error(error);
+    });
+  };
+
   return (
     <div className="max-w-5xl mx-auto mt-8">
       <div className="border-b-2 flex flex-col justify-between items-start border-gray-300 dark:border-gray-600 pb-1">
@@ -40,7 +48,7 @@ export default function BoardDetail({ id }: { id: string }) {
             >
               수정
             </Button>
-            <Button variant="primaryOutline" size="sm">
+            <Button variant="primaryOutline" size="sm" onClick={() => handleDeleteBoard(id)}>
               삭제
             </Button>
           </div>
