@@ -46,6 +46,7 @@ export default function SignupForm() {
 
       <form className="space-y-4">
         <Input
+          id="username"
           label="이메일"
           placeholder="이메일을 입력해주세요."
           autoFocus
@@ -54,12 +55,14 @@ export default function SignupForm() {
           {...register("username")}
         />
         <Input
+          id="name"
           label="이름"
           placeholder="이름을 입력해주세요."
           errorMessage={errors.name?.message}
           {...register("name")}
         />
         <Input
+          id="password"
           label="비밀번호"
           type="password"
           placeholder="비밀번호를 입력해주세요."
@@ -76,6 +79,7 @@ export default function SignupForm() {
           })}
         />
         <Input
+          id="confirmPassword"
           label="비밀번호 확인"
           type="password"
           placeholder="비밀번호를 확인해주세요."
@@ -86,6 +90,7 @@ export default function SignupForm() {
         />
 
         <Button
+          id="signup-button"
           onClick={handleSubmit(onSubmit)}
           type="submit"
           aria-label="회원가입"

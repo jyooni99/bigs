@@ -92,6 +92,7 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
           />
 
           <Input
+            id="title"
             label="제목"
             autoFocus
             {...register("title")}
@@ -100,6 +101,7 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
           />
 
           <TextArea
+            id="content"
             label="내용"
             rows={15}
             {...register("content")}
@@ -108,6 +110,7 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
           />
 
           <FileUpload
+            id="file-upload"
             name="file"
             label="파일 첨부"
           />

@@ -4,17 +4,18 @@ import { useFileUpload } from "@/src/hooks/use-file-upload";
 import { cn } from "@/src/lib/cn";
 import { ImageUp, X } from "lucide-react";
 import Image from "next/image";
+import { ComponentProps } from "react";
 import Button from "./button";
 import Label from "./label";
 
-interface FileUploadProps {
+interface FileUploadProps extends ComponentProps<"input"> {
   label?: string;
   name: string;
   previewClassName?: string;
-  required?: boolean;
 }
 
 export default function FileUpload({
+  id,
   label,
   name,
   required = false,
@@ -37,7 +38,7 @@ export default function FileUpload({
       <div className="relative">
         <input
           type="file"
-          id={name}
+          id={id}
           data-testid="file-input"
           accept="image/*"
           {...rest}

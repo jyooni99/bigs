@@ -1,4 +1,3 @@
-// Input.tsx
 "use client";
 
 import { cn } from "@/src/lib/cn";
@@ -15,6 +14,7 @@ interface InputProps extends ComponentProps<"input"> {
 }
 
 const Input = ({
+  id,
   label,
   errorMessage,
   helperText,
@@ -29,10 +29,10 @@ const Input = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <Label htmlFor={label} text={label} />
+      <Label htmlFor={id} text={label} />
       <div className="relative">
         <input
-          id={label}
+          id={id}
           type={inputType}
           className={cn(
             "w-full px-4 py-2.5 sm:text-base text-sm border border-zinc-300 dark:border-zinc-600 rounded focus:outline-none focus:ring-2 focus:ring-sky-500 dark:focus:ring-sky-700 dark:bg-zinc-900",

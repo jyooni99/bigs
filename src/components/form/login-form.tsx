@@ -34,6 +34,7 @@ export default function LoginForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <Input
+            id="username"
             label="이메일"
             placeholder="이메일을 입력해주세요."
             errorMessage={errors.username?.message}
@@ -45,6 +46,7 @@ export default function LoginForm() {
 
         <div>
           <Input
+            id="password"
             label="비밀번호"
             type="password"
             placeholder="비밀번호를 입력해주세요."
@@ -57,6 +59,7 @@ export default function LoginForm() {
         </div>
 
         <Button
+          id="login-button"
           type="submit"
           aria-label="로그인"
           variant="primary"
