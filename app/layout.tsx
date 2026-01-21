@@ -1,6 +1,7 @@
 import AuthGuard from "@/src/components/auth-guard";
 import Footer from "@/src/components/layout/footer";
 import Header from "@/src/components/layout/header";
+import { ToastContainer } from "@/src/components/ui/toast";
 import QueryProvider from "@/src/lib/query-provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -31,6 +32,7 @@ export default function RootLayout({
       <html lang="ko">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <Header />
+          <ToastContainer />
           <AuthGuard>
             <main className="container mx-auto px-4 py-8 sm:min-h-[calc(100vh-9.3rem)] min-h-[calc(100vh-7rem)] mt-8 sm:mt-16 ">
               {children}

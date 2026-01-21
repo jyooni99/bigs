@@ -1,17 +1,17 @@
+import { boardsAPI } from "@/src/apis/board";
+import BoardListSkeleton from "@/src/components/skeleton/board-list-skeleton";
+import Button from "@/src/components/ui/button";
+import Label from "@/src/components/ui/label";
+import Pagination from "@/src/components/ui/pagination";
+import StatusView from "@/src/components/ui/status-view";
+import formatDate from "@/src/lib/formatter";
+import { Board } from "@/src/types/board";
 import { useQuery } from "@tanstack/react-query";
 import { AlertCircle, PenBox } from "lucide-react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { boardsAPI } from "../../apis/board";
-import formatDate from "../../lib/formatter";
-import { Board } from "../../types/board";
-import BoardListSkeleton from "../skeleton/board-list-skeleton";
-import Button from "../ui/button";
-import Label from "../ui/label";
-import Pagination from "../ui/pagination";
-import StatusView from "../ui/status-view";
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_SIZE = 10;

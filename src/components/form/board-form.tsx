@@ -6,7 +6,6 @@ import CategorySelector from "@/src/components/ui/category-selector";
 import FileUpload from "@/src/components/ui/file-upload";
 import Input from "@/src/components/ui/input";
 import TextArea from "@/src/components/ui/text-area";
-import { parseServerMessage } from "@/src/lib/parse-server-error";
 import {
   CreateBoardRequest,
   createBoardSchema,
@@ -15,9 +14,9 @@ import {
 } from "@/src/schemas/board";
 import { BoardDetail } from "@/src/types/board";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 
 interface BoardFormProps {
@@ -27,8 +26,6 @@ interface BoardFormProps {
 }
 
 export default function BoardForm({ mode, boardId, initialData }: BoardFormProps) {
-  const [serverError, setServerError] = useState("");
-
   const isEditMode = mode === "edit";
   const schema = isEditMode ? updateBoardSchema : createBoardSchema;
 
@@ -70,19 +67,9 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
 
   const onSubmit = async (data: CreateBoardRequest | UpdateBoardRequest) => {
     if (isEditMode) {
-      updateMutation.mutate(data as UpdateBoardRequest, {
-        onError: (error) => {
-          const message = parseServerMessage(error, "게시글 수정에 실패했습니다. 다시 시도해주세요.");
-          setServerError(message);
-        },
-      });
+      updateMutation.mutate(data as UpdateBoardRequest);
     } else {
-      createMutation.mutate(data as CreateBoardRequest, {
-        onError: (error) => {
-          const message = parseServerMessage(error, "게시글 작성에 실패했습니다. 다시 시도해주세요.");
-          setServerError(message);
-        },
-      });
+      createMutation.mutate(data as CreateBoardRequest);
     }
   };
 
@@ -105,13 +92,6 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
           <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
             게시글 {isEditMode ? "수정" : "작성"}
           </h1>
-
-          {serverError && (
-            <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg flex items-start">
-              <AlertCircle className="w-5 h-5 mr-2 mt-0.5 shrink-0" />
-              <span>{serverError}</span>
-            </div>
-          )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <CategorySelector

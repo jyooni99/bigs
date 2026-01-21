@@ -2,9 +2,10 @@
 
 import BoardList from "@/src/components/board/board-list";
 import Button from "@/src/components/ui/button";
+import FloatingActionButton from "@/src/components/ui/floating-button";
 import StatusView from "@/src/components/ui/status-view";
 import { useAuthStore } from "@/src/stores/auth-store";
-import { PenBox, PenLine } from "lucide-react";
+import { PenLine } from "lucide-react";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -18,21 +19,6 @@ export default function HomePage() {
     <div className="max-w-4xl mx-auto">
       {isAuthenticated ? <AuthenticatedView /> : <UnauthenticatedView />}
     </div>
-  );
-}
-
-function FloatingActionButton() {
-  return (
-    <Button
-      asChild
-      className="fixed bottom-6 right-6 sm:bottom-5 sm:right-5 z-10 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-full"
-      variant="primary"
-      size="icon"
-    >
-      <Link href="/boards/create">
-        <PenBox className="sm:w-6 sm:h-6 w-5 h-5" strokeWidth={1.5} />
-      </Link>
-    </Button>
   );
 }
 

@@ -1,9 +1,9 @@
 "use client";
 
 import Button from "@/src/components/ui/button";
+import { useAuthStore } from "@/src/stores/auth-store";
+import { User } from "@/src/types/auth";
 import Link from "next/link";
-import { useAuthStore } from "../stores/auth-store";
-import { User } from "../types/auth";
 
 export default function Header() {
   const { user, logout, hasHydrated } = useAuthStore();

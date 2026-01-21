@@ -7,5 +7,5 @@ interface BoardDetailPageProps {
 export default async function BoardDetailPage({ params }: BoardDetailPageProps) {
   const { id } = await params;
 
-  return <BoardDetail id={Number(id)} />;
+  return (<BoardDetail id={Number(id)} />);
 }

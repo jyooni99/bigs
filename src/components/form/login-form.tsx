@@ -1,22 +1,15 @@
 "use client";
 
-import { authAPI } from "@/src/apis/auth";
+import { useLogin } from "@/app/api/mutation";
 import Button from "@/src/components/ui/button";
 import Input from "@/src/components/ui/input";
-import { getUser } from "@/src/lib/get-user";
-import { parseServerMessage } from "@/src/lib/parse-server-error";
 import { LoginRequest, LoginSchema } from "@/src/schemas/auth";
-import { useAuthStore } from "@/src/stores/auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
-  const { setAuth } = useAuthStore();
-  const router = useRouter();
-  const [serverError, setServerError] = useState<string>("");
+  const loginMutation = useLogin();
 
   const {
     register,
@@ -28,35 +21,15 @@ export default function LoginForm() {
   });
 
   const onSubmit = async (data: LoginRequest) => {
-    setServerError("");
-
-    try {
-      const response = await authAPI.login(data);
-
-      if (response.data) {
-        const user = getUser(response.data.accessToken);
-        setAuth(user, response.data.accessToken, response.data.refreshToken);
-        router.push("/");
-      }
-    } catch (error) {
-      const message = parseServerMessage(
-        error,
-        "로그인에 실패했습니다. 다시 시도해주세요."
-      );
-      setServerError(message);
-    }
+    loginMutation.mutate(data);
   };
 
   return (
+    
     <div className="max-w-md mx-auto sm:pt-10 pt-8">
       <h2 className="sm:text-2xl text-xl font-bold mb-6 text-center">로그인</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {serverError && (
-          <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-sm text-red-600 dark:text-red-400">
-            {serverError}
-          </div>
-        )}
         <div>
           <Input
             label="이메일"
@@ -86,9 +59,9 @@ export default function LoginForm() {
           variant="primary"
           size="full"
           className="mt-7 font-bold"
-          disabled={!isValid}
+          disabled={!isValid || loginMutation.isPending}
         >
-          로그인
+          {loginMutation.isPending ? "로그인 중..." : "로그인"}
         </Button>
       </form>
 

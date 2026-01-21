@@ -1,17 +1,16 @@
 "use client";
 
-import { authAPI } from "@/src/apis/auth";
+import { useSignup } from "@/app/api/mutation";
 import Button from "@/src/components/ui/button";
 import Input from "@/src/components/ui/input";
 import { parseServerError } from "@/src/lib/parse-server-error";
 import { SignupRequest, SignupSchema } from "@/src/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function SignupForm() {
-  const router = useRouter();
+  const signupMutation = useSignup();
 
   const {
     register,
@@ -26,20 +25,17 @@ export default function SignupForm() {
   });
 
   const onSubmit = async (data: SignupRequest) => {
-    try {
-      const response = await authAPI.signup(data);
-
-      if (response.status === 200) {
-        router.push("/auth/login");
-      }
-    } catch (error) {
-      const fieldErrors = parseServerError(error);
-
-      if (fieldErrors) {
-        const [field, message] = Object.entries(fieldErrors)[0];
-        setError(field as keyof SignupRequest, { type: "server", message });
-      }
-    }
+    signupMutation.mutate(data, {
+      onError: (error) => {
+        // 필드별 에러가 있으면 해당 필드에 표시
+        const fieldErrors = parseServerError(error);
+        if (fieldErrors) {
+          const [field, message] = Object.entries(fieldErrors)[0];
+          setError(field as keyof SignupRequest, { type: "server", message });
+        }
+        // 일반 에러는 mutation에서 toast로 처리됨
+      },
+    });
   };
 
   return (
@@ -92,9 +88,9 @@ export default function SignupForm() {
           variant="primary"
           size="full"
           className="mt-7 font-bold"
-          disabled={!isValid}
+          disabled={!isValid || signupMutation.isPending}
         >
-          회원가입
+          {signupMutation.isPending ? "가입 중..." : "회원가입"}
         </Button>
       </form>
 

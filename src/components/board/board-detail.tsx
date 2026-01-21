@@ -11,8 +11,7 @@ import { AlertCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { parseServerMessage } from "../../lib/parse-server-error";
+import FloatingActionButton from "../ui/floating-button";
 
 
 interface BoardDetailProps {
@@ -21,7 +20,6 @@ interface BoardDetailProps {
 
 export default function BoardDetail({ id }: BoardDetailProps) {
   const router = useRouter();
-  const [serverError, setServerError] = useState("");
   const deleteMutation = useDeleteBoard();
   const { data: board, isLoading, isFetching, isError } = useGetBoard(id);
 
@@ -47,67 +45,60 @@ export default function BoardDetail({ id }: BoardDetailProps) {
   };
 
   const handleDeleteBoard = (id: number) => {
-    deleteMutation.mutate(id,{
-      onError: (error) => {
-        const message = parseServerMessage(error, "게시글 삭제에 실패했습니다. 다시 시도해주세요.");
-        setServerError(message);
-      },
-    });
+    deleteMutation.mutate(id);
   };
 
   return (
-    <div className="max-w-5xl mx-auto mt-8">
-      {serverError && (
-        <div className="p-3 mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-sm text-red-600 dark:text-red-400">
-          {serverError}
+    <>
+      <div className="max-w-5xl mx-auto mt-8">
+        <div className="border-b-2 flex flex-col justify-between items-start border-gray-300 dark:border-gray-600 pb-1">
+          <div className="flex w-full justify-between items-start gap-2">
+            <h2 className="sm:text-xl text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">
+              {board.data?.title}
+            </h2>
+            <div className="flex items-center gap-2 shrink-0 pl-3">
+              <Button
+                variant="primaryOutline"
+                size="sm"
+                onClick={() => router.push(`/boards/${id}/edit`)}
+              >
+                수정
+              </Button>
+              <Button variant="primaryOutline" size="sm" onClick={() => handleDeleteBoard(id)}>
+                삭제
+              </Button>
+            </div>
+          </div>
+          <span className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+            {formatDate(board.data?.createdAt)}
+          </span>
         </div>
-      )}
-      <div className="border-b-2 flex flex-col justify-between items-start border-gray-300 dark:border-gray-600 pb-1">
-        <div className="flex w-full justify-between items-start gap-2">
-          <h2 className="sm:text-xl text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">
-            {board.data?.title}
-          </h2>
-          <div className="flex items-center gap-2 shrink-0 pl-3">
-            <Button
-              variant="primaryOutline"
-              size="sm"
-              onClick={() => router.push(`/boards/${id}/edit`)}
-            >
-              수정
-            </Button>
-            <Button variant="primaryOutline" size="sm" onClick={() => handleDeleteBoard(id)}>
-              삭제
-            </Button>
+
+        <div className="bg-white dark:bg-gray-800 py-8 border-b-2 border-gray-300 dark:border-gray-700">
+          <div className="prose prose-slate dark:prose-invert max-w-none">
+            <div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-6">
+              {board.data?.imageUrl && (
+                <div className="relative w-full max-w-2xl mx-auto">
+                  <Image
+                    src={getImageUrl(board.data?.imageUrl)}
+                    alt={board.data?.title}
+                    width={800}
+                    height={600}
+                    className="rounded-lg object-contain"
+                    unoptimized
+                  />
+                </div>
+              )}
+              <p>{board.data?.content}</p>
+            </div>
           </div>
         </div>
-        <span className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-          {formatDate(board.data?.createdAt)}
-        </span>
-      </div>
 
-      <div className="bg-white dark:bg-gray-800 py-8 border-b-2 border-gray-300 dark:border-gray-700">
-        <div className="prose prose-slate dark:prose-invert max-w-none">
-          <div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-6">
-            {board.data?.imageUrl && (
-              <div className="relative w-full max-w-2xl mx-auto">
-                <Image
-                  src={getImageUrl(board.data?.imageUrl)}
-                  alt={board.data?.title}
-                  width={800}
-                  height={600}
-                  className="rounded-lg object-contain"
-                  unoptimized
-                />
-              </div>
-            )}
-            <p>{board.data?.content}</p>
-          </div>
+        <div className="mt-20">
+          <BoardList showSize={false} redirectHome={true} currentPostId={Number(id)} />
         </div>
       </div>
-
-      <div className="mt-20">
-        <BoardList showSize={false} redirectHome={true} currentPostId={Number(id)} />
-      </div>
-    </div>
+      <FloatingActionButton />
+    </>
   );
 }
