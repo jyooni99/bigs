@@ -99,7 +99,7 @@ export default function BoardDetail({ id }: { id: string }) {
       </div>
 
       <div className="mt-20">
-        <BoardList showSize={false} />
+        <BoardList showSize={false} redirectHome={true} currentPostId={Number(id)} />
       </div>
     </div>
   );

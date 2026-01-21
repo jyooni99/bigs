@@ -27,21 +27,24 @@ const getNumberParams = (params: URLSearchParams, key: string, defaultValue: num
   return isNaN(parsedValue) || parsedValue < 0 ? defaultValue : parsedValue;
 }
 
-const updateURL = (router: AppRouterInstance, page: number, size: number) => {
+const updateURL = (router: AppRouterInstance, page: number, size: number, redirectToHome: boolean = false) => {
   const params = new URLSearchParams();
 
   if (page > 0) params.set("page", page.toString());
   if (size !== DEFAULT_SIZE) params.set("size", size.toString());
 
-  const newUrl = params.toString() ? `?${params.toString()}` : "/";
+  const basePath = redirectToHome ? "/" : window.location.pathname;
+  const newUrl = params.toString() ? `${basePath}?${params.toString()}` : basePath;
   router.push(newUrl, { scroll: false });
 }
 
 interface BoardListProps {
   showSize?: boolean;
+  redirectHome?: boolean;
+  currentPostId?: number;
 }
 
-const BoardList = ({ showSize = true }: BoardListProps) => {
+const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: BoardListProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = getNumberParams(searchParams, "page", DEFAULT_PAGE);
@@ -64,12 +67,12 @@ const BoardList = ({ showSize = true }: BoardListProps) => {
   }, [page, size, boards?.data, router]);
 
   const handlePageChange = (newPage: number) => {
-    updateURL(router, newPage, size);
+    updateURL(router, newPage, size, redirectHome);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   const handleSizeChange = (newSize: number) => {
-    updateURL(router, DEFAULT_PAGE, newSize);
+    updateURL(router, DEFAULT_PAGE, newSize, redirectHome);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -129,7 +132,12 @@ const BoardList = ({ showSize = true }: BoardListProps) => {
         <BoardTableHeader />
         <div>
           {boards?.data.content.map((board) => (
-            <BoardItem key={board.id} board={board} />
+            <BoardItem 
+              key={board.id} 
+              board={board} 
+              currentPage={page} 
+              isCurrentPost={currentPostId === board.id}
+            />
           ))}
         </div>
       </div>
@@ -159,11 +167,17 @@ const BoardTableHeader = () => {
   );
 }
 
-const BoardItem = ({ board }: { board: Board }) => {
+const BoardItem = ({ board, currentPage, isCurrentPost }: { board: Board; currentPage?: number; isCurrentPost?: boolean }) => {
+  const href = currentPage !== undefined && currentPage > 0 
+    ? `/boards/${board.id}?page=${currentPage}` 
+    : `/boards/${board.id}`;
+    
   return (
     <Link
-      href={`/boards/${board.id}`}
-      className="group grid sm:grid-cols-[120px_1fr_150px] grid-cols-[90px_1fr] gap-4 sm:px-6 px-1 py-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+      href={href}
+      className={`group grid sm:grid-cols-[120px_1fr_150px] grid-cols-[90px_1fr] gap-4 sm:px-6 px-1 py-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors ${
+        isCurrentPost ? 'bg-sky-50/50 dark:bg-sky-950/30' : ''
+      }`}
     >
       <div className="flex items-center justify-center">
         <span className="inline-block text-center px-2.5 py-1 text-xs font-medium rounded-md bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300">
@@ -172,7 +186,9 @@ const BoardItem = ({ board }: { board: Board }) => {
       </div>
 
       <div className="flex items-center justify-start">
-        <h3 className="text-sm text-gray-900 dark:text-gray-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors truncate">
+        <h3 className={`text-sm text-gray-900 dark:text-gray-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors truncate ${
+          isCurrentPost ? 'font-semibold text-sky-600 dark:text-sky-400' : ''
+        }`}>
           {board.title}
         </h3>
       </div>
