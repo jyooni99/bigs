@@ -4,14 +4,14 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { boardsAPI } from "../apis/board";
-import formatDate from "../lib/formatter";
-import { Board } from "../types/board";
-import BoardListSkeleton from "./skeleton/board-list-skeleton";
-import StatusView from "./status-view";
-import Button from "./ui/button";
-import Label from "./ui/label";
-import Pagination from "./ui/pagination";
+import { boardsAPI } from "../../apis/board";
+import formatDate from "../../lib/formatter";
+import { Board } from "../../types/board";
+import BoardListSkeleton from "../skeleton/board-list-skeleton";
+import Button from "../ui/button";
+import Label from "../ui/label";
+import Pagination from "../ui/pagination";
+import StatusView from "../ui/status-view";
 
 const DEFAULT_PAGE = 0;
 const DEFAULT_SIZE = 10;

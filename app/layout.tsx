@@ -1,6 +1,6 @@
 import AuthGuard from "@/src/components/auth-guard";
-import Footer from "@/src/components/footer";
-import Header from "@/src/components/header";
+import Footer from "@/src/components/layout/footer";
+import Header from "@/src/components/layout/header";
 import QueryProvider from "@/src/lib/query-provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";

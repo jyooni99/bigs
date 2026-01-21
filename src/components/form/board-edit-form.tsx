@@ -1,10 +1,10 @@
 "use client";
 
 import { boardsAPI } from "@/src/apis/board";
-import BoardForm from "@/src/components/board-form";
+import BoardForm from "@/src/components/form/board-form";
 import BoardFormSkeleton from "@/src/components/skeleton/board-form-skeleton";
-import StatusView from "@/src/components/status-view";
 import Button from "@/src/components/ui/button";
+import StatusView from "@/src/components/ui/status-view";
 import { useQuery } from "@tanstack/react-query";
 import { FileX } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";

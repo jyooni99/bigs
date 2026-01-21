@@ -1,4 +1,4 @@
-import BoardDetail from "@/src/components/board-detail";
+import BoardDetail from "@/src/components/board/board-detail";
 
 interface BoardDetailPageProps {
   params: Promise<{ id: string }>;

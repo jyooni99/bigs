@@ -1,8 +1,8 @@
 "use client";
 
-import BoardList from "@/src/components/board-list";
-import StatusView from "@/src/components/status-view";
+import BoardList from "@/src/components/board/board-list";
 import Button from "@/src/components/ui/button";
+import StatusView from "@/src/components/ui/status-view";
 import { useAuthStore } from "@/src/stores/auth-store";
 import { PenBox, PenLine } from "lucide-react";
 import Link from "next/link";

@@ -2,17 +2,17 @@
 
 import { useDeleteBoard } from "@/app/api/mutation";
 import { useGetBoard } from "@/app/api/query";
+import BoardList from "@/src/components/board/board-list";
+import BoardDetailSkeleton from "@/src/components/skeleton/board-detail-skeleton";
 import Button from "@/src/components/ui/button";
+import StatusView from "@/src/components/ui/status-view";
 import formatDate from "@/src/lib/formatter";
 import { AlertCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { parseServerMessage } from "../lib/parse-server-error";
-import BoardList from "./board-list";
-import BoardDetailSkeleton from "./skeleton/board-detail-skeleton";
-import StatusView from "./status-view";
+import { parseServerMessage } from "../../lib/parse-server-error";
 
 
 interface BoardDetailProps {
