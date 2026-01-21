@@ -27,14 +27,4 @@ const parseServerError = (error: unknown): Record<string, string> | null => {
   return null;
 };
 
-const parseServerMessage = (
-  error: unknown,
-  defaultMessage: string = "알 수 없는 오류가 발생했습니다."
-): string => {
-  if (!(error instanceof AxiosError)) return defaultMessage;
-
-  const message = error.response?.data.message;
-  return message || defaultMessage;
-};
-
-export { parseServerError, parseServerMessage };
+export { parseServerError };

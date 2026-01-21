@@ -1,11 +1,10 @@
 "use client";
 
 import { cn } from '@/src/lib/cn';
-import { useToastStore } from '@/src/stores/toast-store';
-import { cva, VariantProps } from 'class-variance-authority';
+import { Toast as ToastType, useToastStore } from '@/src/stores/toast-store';
+import { cva } from 'class-variance-authority';
 import { Check, Info, X } from 'lucide-react';
 import Button from './button';
-
 
 const toastVariants = cva(
   "flex items-center justify-between gap-2 p-4 bg-white dark:bg-gray-800 z-50",
@@ -29,22 +28,19 @@ const toastIconMap = {
   normal: Info,
 } as const;
 
-
-export type ToastProps = VariantProps<typeof toastVariants> & {
-  id: number;
-  message: string;
-  onRemove: (id: number) => void;
-  isRemoving: boolean;
+interface ToastProps {
+  toast: ToastType;
 }
 
-const Toast = ({ id, message, variant, isRemoving, onRemove }: ToastProps) => {
-  const Icon = toastIconMap[variant || 'normal'];
-  const { setRemoving } = useToastStore();
+const Toast = ({ toast }: ToastProps) => {
+  const { id, message, variant, isRemoving } = toast;
+  const Icon = toastIconMap[variant];
+  const { setRemoving, removeToast } = useToastStore();
 
   const handleRemove = () => {
     setRemoving(id);
     setTimeout(() => {
-      onRemove(id);
+      removeToast(id);
     }, 300);
   };
   
@@ -66,28 +62,17 @@ const Toast = ({ id, message, variant, isRemoving, onRemove }: ToastProps) => {
   )
 }
 
-
 const ToastContainer = () => {
-  const {toastList, removeToast} = useToastStore();
+  const { toastList } = useToastStore();
 
   return (
     <div className="fixed bottom-20 right-5 flex flex-col gap-2">
-      {
-        toastList.map((toast) => (
-          <Toast 
-            key={toast.id} 
-            id={toast.id} 
-            message={toast.message} 
-            variant={toast.variant}
-            isRemoving={toast.isRemoving}
-            onRemove={removeToast} 
-          />
-        ))
-      }
+      {toastList.map((toast) => (
+        <Toast key={toast.id} toast={toast} />
+      ))}
     </div>
   )
 }
-
 
 export { Toast, ToastContainer };
 

@@ -1,38 +1,50 @@
 import { create } from "zustand";
-import { ToastProps } from "../components/ui/toast";
 
+export type ToastVariant = "success" | "error" | "normal";
+
+export interface Toast {
+  id: number;
+  message: string;
+  variant: ToastVariant;
+  isRemoving: boolean;
+}
 
 interface ToastStore {
-  isRemoving: boolean;
-  toastList: ToastProps[];
-  addToast: (toast: ToastProps) => void;
+  toastList: Toast[];
+  addToast: (message: string, variant?: ToastVariant) => void;
   setRemoving: (id: number) => void;
   removeToast: (id: number) => void;
 }
 
-
 export const useToastStore = create<ToastStore>()((set) => ({
-  isRemoving: false,
   toastList: [],
   
-  addToast: (toast) => {
+  addToast: (message, variant = "normal") => {
+    const id = Date.now();
+    const newToast: Toast = {
+      id,
+      message,
+      variant,
+      isRemoving: false,
+    };
+
     set((state) => ({ 
-      toastList: [...state.toastList, { ...toast, isRemoving: false }] 
-    }))
+      toastList: [...state.toastList, newToast] 
+    }));
     
     setTimeout(() => {
       set((state) => ({ 
         toastList: state.toastList.map((t) => 
-          t.id === toast.id ? { ...t, isRemoving: true } : t
+          t.id === id ? { ...t, isRemoving: true } : t
         )
-      }))
+      }));
       
       setTimeout(() => {
         set((state) => ({ 
-          toastList: state.toastList.filter((t) => t.id !== toast.id) 
-        }))
-      }, 300)
-    }, 3700)
+          toastList: state.toastList.filter((t) => t.id !== id) 
+        }));
+      }, 300);
+    }, 3700);
   },
 
   setRemoving: (id) => {
@@ -40,13 +52,13 @@ export const useToastStore = create<ToastStore>()((set) => ({
       toastList: state.toastList.map((t) => 
         t.id === id ? { ...t, isRemoving: true } : t
       )
-    }))
+    }));
   },
 
   removeToast: (id) => {
     set((state) => ({ 
       toastList: state.toastList.filter((toast) => toast.id !== id) 
-    }))
+    }));
   },
 }));
 
