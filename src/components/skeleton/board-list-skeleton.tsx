@@ -36,13 +36,20 @@ export default function BoardListSkeleton({ size = 10 }: BoardListSkeletonProps)
 
       {/* 페이지네이션 스켈레톤 */}
       <div className="flex items-center justify-center gap-2">
-        <div className="h-9 w-9 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-        <div className="flex gap-1">
+        {/* 처음으로 버튼 */}
+        <div className="h-7 w-7 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+        {/* 이전 버튼 */}
+        <div className="h-7 w-7 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+        {/* 페이지 번호들 */}
+        <div className="flex gap-2">
           {Array.from({ length: 5 }).map((_, index) => (
-            <div key={index} className="h-9 w-9 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+            <div key={index} className="h-7 w-7 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse" />
           ))}
         </div>
-        <div className="h-9 w-9 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+        {/* 다음 버튼 */}
+        <div className="h-7 w-7 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+        {/* 마지막으로 버튼 */}
+        <div className="h-7 w-7 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
       </div>
     </div>
   );
