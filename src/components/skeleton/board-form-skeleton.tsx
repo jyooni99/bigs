@@ -1,11 +1,6 @@
 export default function BoardFormSkeleton() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      {/* 뒤로가기 버튼 스켈레톤 */}
-      <div className="mb-4 sm:mb-6">
-        <div className="h-4 sm:h-5 w-20 sm:w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-      </div>
-
       <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 md:p-8">
         {/* 제목 스켈레톤 */}
         <div className="h-7 sm:h-8 md:h-9 w-40 sm:w-48 bg-gray-200 dark:bg-gray-700 rounded mb-6 sm:mb-8 animate-pulse" />

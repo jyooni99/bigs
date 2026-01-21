@@ -14,7 +14,6 @@ import {
 } from "@/src/schemas/board";
 import { BoardDetail } from "@/src/types/board";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
@@ -78,16 +77,6 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
   return (
     <FormProvider {...methods}>
       <div className="max-w-4xl mx-auto">
-        <div className="mb-6">
-          <Link
-            href={backLink}
-            className="inline-flex items-center text-sky-600 dark:text-sky-400 hover:text-sky-700 dark:hover:text-sky-300 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            {isEditMode ? "뒤로" : "목록으로"}
-          </Link>
-        </div>
-
         <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
           <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
             게시글 {isEditMode ? "수정" : "작성"}
@@ -132,12 +121,13 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
           
 
           <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <Link
-              href={backLink}
-              className="px-6 py-2.5 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium"
-            >
-              취소
-            </Link>
+            <Button variant="secondaryOutline" size="lg" asChild>
+              <Link
+                href={backLink}
+              >
+                취소
+              </Link>
+            </Button>
             <Button
               type="submit"
               variant="primary"
