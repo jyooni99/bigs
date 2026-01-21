@@ -32,6 +32,7 @@ const Input = ({
       <Label htmlFor={label} text={label} />
       <div className="relative">
         <input
+          id={label}
           type={inputType}
           className={cn(
             "w-full px-4 py-2.5 sm:text-base text-sm border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-sky-500 dark:bg-gray-800",

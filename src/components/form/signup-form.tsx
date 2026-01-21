@@ -66,6 +66,7 @@ export default function SignupForm() {
           showPasswordToggle
           errorMessage={errors.password?.message}
           helperText="8~20자 / 영문, 숫자, 특수문자(!%*#?&)를 각각 1개 이상 포함"
+          autoComplete="off"
           {...register("password", {
             onChange: () => {
               if (touchedFields.confirmPassword || getValues("confirmPassword")) {
@@ -80,6 +81,7 @@ export default function SignupForm() {
           placeholder="비밀번호를 확인해주세요."
           showPasswordToggle
           errorMessage={errors.confirmPassword?.message}
+          autoComplete="off"
           {...register("confirmPassword")}
         />
 

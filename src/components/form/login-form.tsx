@@ -51,6 +51,7 @@ export default function LoginForm() {
             showPasswordToggle
             errorMessage={errors.password?.message}
             helperText="8~20자, 영문자, 숫자, 특수문자(!%*#?&)를 각각 1개 이상 포함"
+            autoComplete="off"
             {...register("password")}
           />
         </div>
