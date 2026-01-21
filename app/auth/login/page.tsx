@@ -48,8 +48,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-center">로그인</h2>
+    <div className="max-w-md mx-auto sm:pt-10 pt-8">
+      <h2 className="sm:text-2xl text-xl font-bold mb-6 text-center">로그인</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {serverError && (
@@ -83,14 +83,14 @@ export default function LoginPage() {
           aria-label="로그인"
           variant="primary"
           size="full"
-          className="mt-3 font-bold"
+          className="mt-7 font-bold"
           disabled={!isValid}
         >
           로그인
         </Button>
       </form>
 
-      <div className="mt-4 text-center text-sm">
+      <div className="mt-4 text-center sm:text-sm text-xs">
         <span className="text-gray-600 dark:text-gray-400">계정이 없으신가요? </span>
         <Link
           href="/auth/signup"

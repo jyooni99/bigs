@@ -48,7 +48,7 @@ export default function Pagination({
             size="sm"
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 0}
-            className="w-9 h-9 p-0"
+            className="w-7 h-7 p-0"
           >
             <ChevronLeft className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-500" />
           </Button>
@@ -62,7 +62,7 @@ export default function Pagination({
             variant="none"
             size="sm"
             onClick={() => onPageChange(page)}
-            className={cn("w-9 h-9 p-0 rounded-full", currentPage === page ? "bg-sky-500 text-white" : "text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-500")}
+            className={cn("w-7 h-7 rounded-full", currentPage === page ? "bg-sky-500 text-white" : "text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-500")}
           >
             {page + 1}
           </Button>
@@ -75,7 +75,7 @@ export default function Pagination({
             size="sm"
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages - 1}
-            className="w-9 h-9 p-0"
+            className="w-7 h-7 p-0"
           >
             <ChevronRight className="w-4 h-4 text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-500" />
           </Button>

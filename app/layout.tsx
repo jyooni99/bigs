@@ -32,7 +32,7 @@ export default function RootLayout({
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           <Header />
           <AuthGuard>
-            <main className="container mx-auto px-4 py-8 min-h-[calc(100vh-10rem)] mt-16">
+            <main className="container mx-auto px-4 py-8 sm:min-h-[calc(100vh-9.3rem)] min-h-[calc(100vh-7rem)] mt-8 sm:mt-16 ">
               {children}
             </main>
             <Footer />

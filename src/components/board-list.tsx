@@ -137,7 +137,7 @@ const BoardList = () => {
 
 const BoardTableHeader = () => {
   return (
-    <div className="grid grid-cols-[120px_1fr_150px] gap-4 px-6 py-4 text-center bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+    <div className="grid sm:grid-cols-[120px_1fr_150px] grid-cols-3 gap-4 sm:px-6 px-1 py-4 text-center bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
       <div className="text-sm font-bold text-gray-700 dark:text-gray-300">
         카테고리
       </div>
@@ -155,7 +155,7 @@ const BoardItem = ({ board }: { board: Board }) => {
   return (
     <Link
       href={`/boards/${board.id}`}
-      className="group grid grid-cols-[120px_1fr_150px] gap-4 px-6 py-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+      className="group grid sm:grid-cols-[120px_1fr_150px] grid-cols-3 gap-4 sm:px-6 px-1 py-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
     >
       <div className="flex items-center justify-center">
         <span className="inline-block text-center px-2.5 py-1 text-xs font-medium rounded-md bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300">
@@ -163,14 +163,14 @@ const BoardItem = ({ board }: { board: Board }) => {
         </span>
       </div>
 
-      <div className="flex items-center">
+      <div className="flex items-center justify-center sm:justify-start">
         <h3 className="text-sm text-gray-900 dark:text-gray-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors truncate">
           {board.title}
         </h3>
       </div>
 
       <div className="flex items-center justify-center">
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        <span className="sm:text-sm text-xs text-gray-500 dark:text-gray-400">
           {formatDate(board.createdAt)}
         </span>
       </div>

@@ -25,12 +25,12 @@ function FloatingActionButton() {
   return (
     <Button
       asChild
-      className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-10 w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full"
+      className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-10 w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center rounded-full"
       variant="primary"
       size="icon"
     >
       <Link href="/boards/create">
-        <PenBox className="md:w-7 md:h-7 w-5 h-5" strokeWidth={1.5} />
+        <PenBox className="sm:w-7 sm:h-7 w-5 h-5" strokeWidth={1.5} />
       </Link>
     </Button>
   );

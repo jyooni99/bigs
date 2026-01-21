@@ -43,8 +43,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-center">회원가입</h2>
+    <div className="max-w-md mx-auto sm:pt-10 pt-8">
+      <h2 className="sm:text-2xl text-xl font-bold mb-6 text-center">회원가입</h2>
 
       <form className="space-y-4">
         <Input
@@ -89,14 +89,14 @@ export default function SignupPage() {
           aria-label="회원가입"
           variant="primary"
           size="full"
-          className="mt-3 font-bold"
+          className="mt-7 font-bold"
           disabled={!isValid}
         >
           회원가입
         </Button>
       </form>
 
-      <div className="mt-4 text-center text-sm">
+      <div className="mt-4 text-center sm:text-sm text-xs">
         <span className="text-gray-600 dark:text-gray-400">이미 계정이 있으신가요? </span>
         <Link
           href="/auth/login"

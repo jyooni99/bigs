@@ -18,8 +18,8 @@ const buttonVariants = cva(
         none: "bg-transparent"
       },
       size: {
-        sm: "text-sm px-4 py-2 rounded-md",
-        lg: "text-base px-7 py-3 rounded-md",
+        sm: "sm:text-sm text-xs sm:px-4 sm:py-2 px-3 py-1.5 rounded-md",
+        lg: "sm:text-base text-sm sm:px-7 sm:py-3 px-5 py-2.5 rounded-md",
         icon: "p-1 rounded",
         full: "w-full py-3 rounded-md",
       },

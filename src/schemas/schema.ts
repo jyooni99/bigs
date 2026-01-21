@@ -34,7 +34,7 @@ export const content = z
 export const category = z.enum(["NOTICE", "FREE", "QNA", "ETC"]);
 
 export const file = z
-  .union([z.instanceof(File), z.string()])
+  z.file()
   .optional()
   .refine(
     (file) => !file || (file instanceof File && file.size <= 10 * 1024 * 1024),
