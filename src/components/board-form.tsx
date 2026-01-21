@@ -1,6 +1,6 @@
 "use client";
 
-import { boardsAPI } from "@/src/apis/board";
+import { useCreateBoard, useUpdateBoard } from "@/app/api/mutation";
 import Button from "@/src/components/ui/button";
 import CategorySelector from "@/src/components/ui/category-selector";
 import FileUpload from "@/src/components/ui/file-upload";
@@ -17,7 +17,6 @@ import { BoardDetail } from "@/src/types/board";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 
@@ -28,20 +27,22 @@ interface BoardFormProps {
 }
 
 export default function BoardForm({ mode, boardId, initialData }: BoardFormProps) {
-  const router = useRouter();
   const [serverError, setServerError] = useState("");
 
   const isEditMode = mode === "edit";
   const schema = isEditMode ? updateBoardSchema : createBoardSchema;
 
+  const createMutation = useCreateBoard();
+  const updateMutation = useUpdateBoard(boardId || 0);
+
   const methods = useForm<CreateBoardRequest | UpdateBoardRequest>({
     resolver: zodResolver(schema),
-    mode: "onTouched",
+    mode: "onChange",
     defaultValues: {
       title: "",
       content: "",
       category: "FREE",
-      file: undefined,
+      file: null,
     },
   });
 
@@ -68,24 +69,20 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
   }, [initialData, setValue]);
 
   const onSubmit = async (data: CreateBoardRequest | UpdateBoardRequest) => {
-    try {
-      const response =
-        isEditMode && boardId
-          ? await boardsAPI.updateBoard(boardId, data)
-          : await boardsAPI.createBoard(data);
-
-      const id = isEditMode && boardId ? boardId : response.data?.id;
-      if (id) {
-        router.push(`/boards/${id}`);
-      }else{
-        router.back();
-      }
-    } catch (error) {
-      const message = parseServerMessage(
-        error,
-        `게시글 ${isEditMode ? "수정" : "작성"}에 실패했습니다. 다시 시도해주세요.`
-      );
-      setServerError(message);
+    if (isEditMode) {
+      updateMutation.mutate(data as UpdateBoardRequest, {
+        onError: (error) => {
+          const message = parseServerMessage(error, "게시글 수정에 실패했습니다. 다시 시도해주세요.");
+          setServerError(message);
+        },
+      });
+    } else {
+      createMutation.mutate(data as CreateBoardRequest, {
+        onError: (error) => {
+          const message = parseServerMessage(error, "게시글 작성에 실패했습니다. 다시 시도해주세요.");
+          setServerError(message);
+        },
+      });
     }
   };
 
@@ -127,6 +124,7 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
 
           <Input
             label="제목"
+            autoFocus
             {...register("title")}
             errorMessage={errors.title?.message}
             placeholder="게시글 제목을 입력하세요"
@@ -165,9 +163,11 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
               variant="primary"
               size="lg"
               className="w-[140px] font-semibold"
-              disabled={!isValid}
+              disabled={!isValid || createMutation.isPending || updateMutation.isPending}
             >
-              {isEditMode ? "수정 완료" : "게시글 등록"}
+              {(createMutation.isPending || updateMutation.isPending) 
+                ? "처리 중..." 
+                : isEditMode ? "수정 완료" : "게시글 등록"}
             </Button>
           </div>
         </form>

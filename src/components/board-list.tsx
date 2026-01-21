@@ -50,7 +50,7 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
   const page = getNumberParams(searchParams, "page", DEFAULT_PAGE);
   const size = getNumberParams(searchParams, "size", DEFAULT_SIZE);
 
-  const {data: boards, isLoading, isError} = useQuery({
+  const {data: boards, isLoading, isFetching, isError} = useQuery({
     queryKey: ["boards", page, size],
     queryFn: () => boardsAPI.getBoards(page, size),
   });
@@ -78,6 +78,11 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
 
   if (isLoading) return <BoardListSkeleton size={size} showSize={showSize} />;
 
+  // 데이터가 없거나 빈 목록이면서 fetch 중일 때 Skeleton 표시
+  if (isFetching && (!boards?.data || boards.data.content.length === 0)) {
+    return <BoardListSkeleton size={size} showSize={showSize} />;
+  }
+
   if (isError) {
     return (
       <div className="pt-10">
@@ -91,17 +96,17 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
     );
   }
 
-  if (boards?.data.totalElements === 0) {
+  if (boards?.data?.content.length === 0) {
     return (
       <div className="pt-10">
-      <StatusView 
-        title="게시글이 존재하지 않습니다." 
-        description="게시글을 작성해주세요." 
-        icon={<PenBox className="size-8" />}>
-        <Button variant="primaryOutline" size="lg" asChild>
-          <Link href="/boards/create">게시글 작성</Link>
-        </Button>
-      </StatusView>
+        <StatusView 
+          title="당신의 이야기를 기록해보세요" 
+          description="아래 버튼을 눌러 첫 게시글을 작성해보세요." 
+          icon={<PenBox className="size-8" />}>
+          <Button variant="primaryOutline" size="lg" asChild>
+            <Link href="/boards/create">게시글 작성</Link>
+          </Button>
+        </StatusView>
       </div>
     );
   }

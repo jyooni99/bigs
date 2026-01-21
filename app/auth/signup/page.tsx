@@ -50,6 +50,8 @@ export default function SignupPage() {
         <Input
           label="이메일"
           placeholder="이메일을 입력해주세요."
+          autoFocus
+          inputMode="email"
           errorMessage={errors.username?.message}
           {...register("username")}
         />

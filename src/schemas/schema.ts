@@ -34,9 +34,6 @@ export const content = z
 export const category = z.enum(["NOTICE", "FREE", "QNA", "ETC"]);
 
 export const file = z
-  z.file()
+  .union([z.instanceof(File), z.string()])
+  .nullable()
   .optional()
-  .refine(
-    (file) => !file || (file instanceof File && file.size <= 10 * 1024 * 1024),
-    "이미지 파일 크기는 10MB 이하여야 합니다."
-  );

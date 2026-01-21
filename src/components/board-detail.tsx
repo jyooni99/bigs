@@ -1,32 +1,33 @@
 "use client";
 
-import { boardsAPI } from "@/src/apis/board";
+import { useDeleteBoard } from "@/app/api/mutation";
+import { useGetBoard } from "@/app/api/query";
 import Button from "@/src/components/ui/button";
 import formatDate from "@/src/lib/formatter";
-import { useQuery } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { AlertCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { parseServerMessage } from "../lib/parse-server-error";
 import BoardList from "./board-list";
 import BoardDetailSkeleton from "./skeleton/board-detail-skeleton";
 import StatusView from "./status-view";
 
-export default function BoardDetail({ id }: { id: string }) {
-  const router = useRouter();
-  const { data: board, isLoading, isError } = useQuery({
-    queryKey: ["board", id],
-    queryFn: () => boardsAPI.getBoard(Number(id)),
-    retry: (failureCount, error) => {
-      const status = (error as AxiosError).response?.status;
 
-      if (status === 404) return false; 
-      return failureCount < 1;
-    },
-  });
+interface BoardDetailProps {
+  id: number;
+}
+
+export default function BoardDetail({ id }: BoardDetailProps) {
+  const router = useRouter();
+  const [serverError, setServerError] = useState("");
+  const deleteMutation = useDeleteBoard();
+  const { data: board, isLoading, isFetching, isError } = useGetBoard(id);
 
   if (isLoading) return <BoardDetailSkeleton />;
+  
+  if (isFetching && !board?.data) return <BoardDetailSkeleton />;
   
   if (isError || !board?.data) return (
     <div className="max-w-5xl mx-auto sm:pt-10 pt-8">
@@ -45,16 +46,22 @@ export default function BoardDetail({ id }: { id: string }) {
     return `${process.env.NEXT_PUBLIC_API_URL}${imageUrl}`;
   };
 
-  const handleDeleteBoard = (id: string) => {
-    boardsAPI.deleteBoard(Number(id)).then(() => {
-      router.push("/");
-    }).catch((error) => {
-      console.error(error);
+  const handleDeleteBoard = (id: number) => {
+    deleteMutation.mutate(id,{
+      onError: (error) => {
+        const message = parseServerMessage(error, "게시글 삭제에 실패했습니다. 다시 시도해주세요.");
+        setServerError(message);
+      },
     });
   };
 
   return (
     <div className="max-w-5xl mx-auto mt-8">
+      {serverError && (
+        <div className="p-3 mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded text-sm text-red-600 dark:text-red-400">
+          {serverError}
+        </div>
+      )}
       <div className="border-b-2 flex flex-col justify-between items-start border-gray-300 dark:border-gray-600 pb-1">
         <div className="flex w-full justify-between items-start gap-2">
           <h2 className="sm:text-xl text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">
