@@ -6,9 +6,11 @@ import Input from "@/src/components/ui/input";
 import { LoginRequest, LoginSchema } from "@/src/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
+  const router = useRouter();
   const loginMutation = useLogin();
 
   const {
@@ -70,6 +72,10 @@ export default function LoginForm() {
         <Link
           href="/auth/signup"
           className="text-sky-600 dark:text-sky-400 hover:underline"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            router.push('/auth/signup');
+          }}
         >
           회원가입
         </Link>

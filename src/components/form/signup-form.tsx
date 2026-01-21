@@ -7,9 +7,11 @@ import { parseServerError } from "@/src/lib/parse-server-error";
 import { SignupRequest, SignupSchema } from "@/src/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function SignupForm() {
+  const router = useRouter();
   const signupMutation = useSignup();
 
   const {
@@ -99,6 +101,10 @@ export default function SignupForm() {
         <Link
           href="/auth/login"
           className="text-sky-600 dark:text-sky-400 hover:underline"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            router.push('/auth/login');
+          }}
         >
           로그인
         </Link>
