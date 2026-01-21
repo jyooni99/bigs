@@ -9,6 +9,7 @@ import { AlertCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import BoardList from "./board-list";
 import BoardDetailSkeleton from "./skeleton/board-detail-skeleton";
 import StatusView from "./status-view";
 
@@ -77,7 +78,7 @@ export default function BoardDetail({ id }: { id: string }) {
         </span>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 py-8">
+      <div className="bg-white dark:bg-gray-800 py-8 border-b-2 border-gray-300 dark:border-gray-700">
         <div className="prose prose-slate dark:prose-invert max-w-none">
           <div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-6">
             {board.data?.imageUrl && (
@@ -97,35 +98,8 @@ export default function BoardDetail({ id }: { id: string }) {
         </div>
       </div>
 
-      <div className="mt-12 border-t border-gray-300 dark:border-gray-700">
-        <div className="flex items-center py-4 border-b border-gray-200 dark:border-gray-700">
-          <span className="w-20 sm:text-sm text-xs text-gray-500 dark:text-gray-400 shrink-0">
-            이전글
-          </span>
-          <Link
-            href="#"
-            className="flex-1 sm:text-base text-sm text-gray-700 hover:text-sky-500 dark:hover:text-sky-400"
-          >
-            이전 게시글 제목
-          </Link>
-        </div>
-        <div className="flex items-center py-4 border-b border-gray-200 dark:border-gray-700">
-          <span className="w-20 sm:text-sm text-xs text-gray-500 dark:text-gray-400 shrink-0">
-            다음글
-          </span>
-          <Link
-            href="#"
-            className="flex-1 sm:text-base text-sm text-gray-700 hover:text-sky-500 dark:hover:text-sky-400"
-          >
-            다음 게시글 제목
-          </Link>
-        </div>
-      </div>
-
-      <div className="flex justify-center mt-12">
-        <Button variant="primaryOutline" size="lg" asChild>
-          <Link href="/">목록으로</Link>
-        </Button>
+      <div className="mt-20">
+        <BoardList showSize={false} />
       </div>
     </div>
   );

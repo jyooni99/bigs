@@ -1,15 +1,19 @@
 interface BoardListSkeletonProps {
   size?: number;
+  showSize?: boolean;
 }
 
-export default function BoardListSkeleton({ size = 10 }: BoardListSkeletonProps) {
+export default function BoardListSkeleton({ size = 10, showSize = true }: BoardListSkeletonProps) {
   return (
     <div className="space-y-6 mb-8 mt-8">
-      {/* 표시 개수 선택 스켈레톤 */}
-      <div className="flex items-center justify-end gap-2">
-        <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-        <div className="h-9 w-20 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
-      </div>
+      {
+        showSize && (  
+          <div className="flex items-center justify-end gap-2">
+            <div className="h-4 w-20 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+            <div className="h-9 w-20 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
+          </div>
+        )
+      }
 
       {/* 테이블 스켈레톤 */}
       <div className="bg-white dark:bg-gray-800 border-b-2 border-gray-300 dark:border-gray-700 overflow-hidden">

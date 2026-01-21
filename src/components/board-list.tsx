@@ -37,7 +37,11 @@ const updateURL = (router: AppRouterInstance, page: number, size: number) => {
   router.push(newUrl, { scroll: false });
 }
 
-const BoardList = () => {
+interface BoardListProps {
+  showSize?: boolean;
+}
+
+const BoardList = ({ showSize = true }: BoardListProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = getNumberParams(searchParams, "page", DEFAULT_PAGE);
@@ -69,7 +73,7 @@ const BoardList = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  if (isLoading) return <BoardListSkeleton size={size} />;
+  if (isLoading) return <BoardListSkeleton size={size} showSize={showSize} />;
 
   if (isError) {
     return (
@@ -101,21 +105,25 @@ const BoardList = () => {
 
   return (
     <div className="space-y-6 mb-8 mt-8">
-      <div className="flex items-center justify-end gap-2">
-        <Label htmlFor="size-select" text="표시 개수:" />
-        <select
-          id="size-select"
-          value={size}
-          onChange={(e) => handleSizeChange(parseInt(e.target.value))}
-          className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:outline-none"
-        >
-          {SIZE_OPTIONS.map((option) => (
-            <option key={option} value={option}>
-              {option}개
-            </option>
-          ))}
-        </select>
-      </div>
+      {
+        showSize && (
+          <div className="flex items-center justify-end gap-2">
+            <Label htmlFor="size-select" text="표시 개수:" />
+            <select
+              id="size-select"
+              value={size}
+              onChange={(e) => handleSizeChange(parseInt(e.target.value))}
+              className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:outline-none"
+            >
+              {SIZE_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}개
+                </option>
+              ))}
+            </select>
+          </div>
+        )
+      }
 
       <div className="bg-white dark:bg-gray-800 border-b-2 border-gray-300 dark:border-gray-700 overflow-hidden">
         <BoardTableHeader />
