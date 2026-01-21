@@ -35,7 +35,7 @@ const Input = ({
           id={label}
           type={inputType}
           className={cn(
-            "w-full px-4 py-2.5 sm:text-base text-sm border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-sky-500 dark:bg-gray-800",
+            "w-full px-4 py-2.5 sm:text-base text-sm border border-zinc-300 dark:border-zinc-600 rounded focus:outline-none focus:ring-2 focus:ring-sky-500 dark:focus:ring-sky-700 dark:bg-zinc-900",
             showPasswordToggle && "pr-10",
             errorMessage && "border-red-400",
             className
@@ -52,12 +52,12 @@ const Input = ({
           >
             {showPassword ? (
               <EyeOff
-                className="sm:size-5.5 size-5 text-gray-500 dark:text-gray-400"
+                className="sm:size-5.5 size-5 text-zinc-500 dark:text-zinc-400"
                 strokeWidth={1.5}
               />
             ) : (
               <Eye
-                className="sm:size-5.5 size-5 text-gray-500 dark:text-gray-400"
+                className="sm:size-5.5 size-5 text-zinc-500 dark:text-zinc-400"
                 strokeWidth={1.5}
               />
             )}

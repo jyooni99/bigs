@@ -54,12 +54,12 @@ export default function FileUpload({
             data-testid="preview-image"
             onClick={handleUpload}
             className={cn(
-              "relative cursor-pointer overflow-hidden rounded-lg border border-gray-200 dark:border-gray-600",
+              "relative cursor-pointer overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-600",
               previewClassName || "h-60 w-full"
             )}
           >
             <Image
-              className="h-full w-full object-contain bg-gray-50 dark:bg-gray-700"
+              className="h-full w-full object-contain bg-zinc-50 dark:bg-zinc-700"
               src={preview}
               alt="preview"
               fill
@@ -77,10 +77,10 @@ export default function FileUpload({
             </Button>
           </div>
         ) : (
-          <Button onClick={handleUpload} variant="none" className="flex flex-col items-center w-full h-60 justify-center border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 transition-colors">
-            <ImageUp className="size-17 text-gray-400 mb-4 bg-gray-100 dark:bg-gray-700 rounded-full p-3.5" strokeWidth={1.5}/>
-            <p className="font-semibold text-gray-700 dark:text-gray-300 mb-1">파일을 클릭하여 업로드</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">이미지 파일 (최대 10MB)</p>
+          <Button onClick={handleUpload} variant="none" className="flex flex-col items-center w-full h-60 justify-center border border-zinc-300 dark:border-zinc-600 hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors">
+            <ImageUp className="size-17 text-zinc-400 mb-4 bg-zinc-100 dark:bg-zinc-700 rounded-full p-3.5" strokeWidth={1.5}/>
+            <p className="font-semibold text-zinc-700 dark:text-zinc-300 mb-1">파일을 클릭하여 업로드</p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400">이미지 파일 (최대 10MB)</p>
           </Button>
         )}
       </div>

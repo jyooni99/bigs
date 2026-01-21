@@ -76,9 +76,9 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
 
   return (
     <FormProvider {...methods}>
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-8">
-          <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
+      <div className="max-w-4xl mx-auto sm:pt-10 pt-4">
+        <div className="bg-white dark:bg-zinc-900 rounded-lg sm:p-8 p-2">
+          <h1 className="text-3xl font-bold mb-8 text-zinc-900 dark:text-white">
             게시글 {isEditMode ? "수정" : "작성"}
           </h1>
 
@@ -120,7 +120,7 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
 
           
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex justify-end gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-700">
             <Button variant="secondaryOutline" size="lg" asChild>
               <Link
                 href={backLink}

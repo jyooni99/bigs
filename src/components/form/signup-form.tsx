@@ -99,7 +99,7 @@ export default function SignupForm() {
       </form>
 
       <div className="mt-4 text-center sm:text-sm text-xs">
-        <span className="text-gray-600 dark:text-gray-400">이미 계정이 있으신가요? </span>
+        <span className="text-zinc-600 dark:text-zinc-400">이미 계정이 있으신가요? </span>
         <Link
           href="/auth/login"
           className="text-sky-600 dark:text-sky-400 hover:underline"

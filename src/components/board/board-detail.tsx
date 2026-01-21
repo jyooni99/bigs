@@ -51,9 +51,9 @@ export default function BoardDetail({ id }: BoardDetailProps) {
   return (
     <>
       <div className="max-w-5xl mx-auto mt-8">
-        <div className="border-b-2 flex flex-col justify-between items-start border-gray-300 dark:border-gray-600 pb-1">
+        <div className="border-b-2 flex flex-col justify-between items-start border-zinc-300 dark:border-zinc-600 pb-1">
           <div className="flex w-full justify-between items-start gap-2">
-            <h2 className="sm:text-xl text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">
+            <h2 className="sm:text-xl text-lg font-medium text-zinc-800 dark:text-zinc-200 mb-4">
               {board.data?.title}
             </h2>
             <div className="flex items-center gap-2 shrink-0 pl-3">
@@ -69,14 +69,14 @@ export default function BoardDetail({ id }: BoardDetailProps) {
               </Button>
             </div>
           </div>
-          <span className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+          <span className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">
             {formatDate(board.data?.createdAt)}
           </span>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 py-8 border-b-2 border-gray-300 dark:border-gray-700">
+        <div className="bg-white dark:bg-zinc-900 py-8 border-b-2 border-zinc-300 dark:border-zinc-700">
           <div className="prose prose-slate dark:prose-invert max-w-none">
-            <div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-6">
+            <div className="text-zinc-700 dark:text-zinc-300 leading-relaxed space-y-6">
               {board.data?.imageUrl && (
                 <div className="relative w-full max-w-2xl mx-auto">
                   <Image

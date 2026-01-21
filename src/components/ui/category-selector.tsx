@@ -39,7 +39,7 @@ export default function CategorySelector({
     <div>
       <Label htmlFor="category" text="카테고리"/>
         
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
         {CATEGORIES.map((category) => {
           const isSelected = value === category.value;
           const Icon = category.icon;
@@ -54,7 +54,7 @@ export default function CategorySelector({
                 "relative flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all",
                 isSelected
                   ? "border-sky-600 bg-sky-50 dark:bg-sky-900/20 hover:bg-sky-100"
-                  : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 hover:bg-sky-50"
+                  : "border-zinc-200 dark:border-zinc-600 hover:border-zinc-300 dark:hover:border-zinc-500 hover:bg-sky-50"
               )}
             >
               <Icon
@@ -62,7 +62,7 @@ export default function CategorySelector({
                   "mb-2 size-5",
                   isSelected
                     ? "text-sky-700 dark:text-sky-300"
-                    : "text-gray-700 dark:text-gray-300"
+                    : "text-zinc-700 dark:text-zinc-300"
                 )}
               />
               <span
@@ -70,7 +70,7 @@ export default function CategorySelector({
                   "text-sm font-medium",
                   isSelected
                     ? "text-sky-700 dark:text-sky-300"
-                    : "text-gray-700 dark:text-gray-300"
+                    : "text-zinc-700 dark:text-zinc-300"
                 )}
               >
                 {category.label}

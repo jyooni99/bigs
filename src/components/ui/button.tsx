@@ -8,13 +8,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "bg-sky-500 text-white hover:bg-sky-600",
-        secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
+        primary: "bg-sky-500 text-white hover:bg-sky-600 dark:bg-sky-600 dark:hover:bg-sky-700",
+        secondary: "bg-zinc-200 text-zinc-800 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:text-zinc-300",
         primaryOutline:
-          "bg-transparent text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white",
+          "bg-transparent text-sky-500 border border-sky-500 hover:bg-sky-500 hover:text-white dark:border-sky-700 dark:hover:bg-sky-800 dark:hover:text-white",
         secondaryOutline:
-          "bg-transparent text-gray-600 border border-gray-600 hover:bg-gray-600 hover:text-white",
-        icon: "hover:bg-gray-100 dark:hover:bg-gray-700",
+          "bg-transparent text-zinc-600 border border-zinc-600 hover:bg-zinc-600 hover:text-white dark:border-zinc-500 dark:hover:bg-zinc-500 dark:hover:text-white",
+        icon: "hover:bg-zinc-100 dark:hover:bg-zinc-700 text-zinc-500 dark:text-zinc-400",
         none: "bg-transparent"
       },
       size: {

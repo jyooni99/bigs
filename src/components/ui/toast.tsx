@@ -7,13 +7,13 @@ import { Check, Info, X } from 'lucide-react';
 import Button from './button';
 
 const toastVariants = cva(
-  "flex items-center justify-between gap-2 p-4 bg-white dark:bg-gray-800 z-50",
+  "flex items-center justify-between gap-2 p-4 bg-white dark:bg-zinc-900 z-50",
   {
     variants: {
       variant: {
-        success: "border border-l-5 border-sky-500 text-sky-500",
-        error: "border border-l-5 border-red-600 text-red-600",
-        normal: "border border-l-5 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400",
+        success: "border border-l-5 border-sky-500 text-sky-500 dark:border-sky-700 dark:text-sky-700",
+        error: "border border-l-5 border-red-600 text-red-600 dark:border-red-700 dark:text-red-700",
+        normal: "border border-l-5 border-zinc-300 dark:border-zinc-600 text-zinc-500 dark:text-zinc-300",
       },
     },
     defaultVariants: {
@@ -66,7 +66,7 @@ const ToastContainer = () => {
   const { toastList } = useToastStore();
 
   return (
-    <div className="fixed bottom-20 right-5 flex flex-col gap-2">
+    <div className="fixed bottom-20 left-0 right-0 md:left-auto md:right-5 flex flex-col gap-2 px-4 md:px-0">
       {toastList.map((toast) => (
         <Toast key={toast.id} toast={toast} />
       ))}

@@ -121,7 +121,7 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
               id="size-select"
               value={size}
               onChange={(e) => handleSizeChange(parseInt(e.target.value))}
-              className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm focus:outline-none"
+              className="px-3 py-1.5 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none"
             >
               {SIZE_OPTIONS.map((option) => (
                 <option key={option} value={option}>
@@ -133,7 +133,7 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
         )
       }
 
-      <div className="bg-white dark:bg-gray-800 border-b-2 border-gray-300 dark:border-gray-700 overflow-hidden">
+      <div className="bg-white dark:bg-zinc-900 border-b-2 border-zinc-300 dark:border-zinc-700 overflow-hidden">
         <BoardTableHeader />
         <div>
           {boards?.data.content.map((board) => (
@@ -158,14 +158,14 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
 
 const BoardTableHeader = () => {
   return (
-    <div className="grid sm:grid-cols-[120px_1fr_150px] grid-cols-[90px_1fr] gap-4 sm:px-6 px-1 py-4 text-center border-t-2 border-gray-300 border-b-2 dark:border-gray-700">
-      <div className="text-sm font-bold text-gray-700 dark:text-gray-300">
+    <div className="grid sm:grid-cols-[120px_1fr_150px] grid-cols-[90px_1fr] gap-4 sm:px-6 px-1 py-4 text-center border-t-2 border-zinc-300 border-b-2 dark:border-zinc-700">
+      <div className="text-sm font-bold text-zinc-700 dark:text-zinc-300">
         카테고리
       </div>
-      <div className="text-sm font-bold text-gray-700 dark:text-gray-300">
+      <div className="text-sm font-bold text-zinc-700 dark:text-zinc-300">
         제목
       </div>
-      <div className="hidden sm:block text-sm font-bold text-gray-700 dark:text-gray-300 text-center">
+      <div className="hidden sm:block text-sm font-bold text-zinc-700 dark:text-zinc-300 text-center">
         등록일
       </div>
     </div>
@@ -180,7 +180,7 @@ const BoardItem = ({ board, currentPage, isCurrentPost }: { board: Board; curren
   return (
     <Link
       href={href}
-      className={`group grid sm:grid-cols-[120px_1fr_150px] grid-cols-[90px_1fr] gap-4 sm:px-6 px-1 py-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors ${
+      className={`group grid sm:grid-cols-[120px_1fr_150px] grid-cols-[90px_1fr] gap-4 sm:px-6 px-1 py-4 border-b border-zinc-200 dark:border-zinc-700 last:border-b-0 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors ${
         isCurrentPost ? 'bg-sky-50/50 dark:bg-sky-950/30' : ''
       }`}
     >
@@ -191,7 +191,7 @@ const BoardItem = ({ board, currentPage, isCurrentPost }: { board: Board; curren
       </div>
 
       <div className="flex items-center justify-start">
-        <h3 className={`text-sm text-gray-900 dark:text-gray-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors truncate ${
+        <h3 className={`text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors truncate ${
           isCurrentPost ? 'font-semibold text-sky-600 dark:text-sky-400' : ''
         }`}>
           {board.title}
@@ -199,7 +199,7 @@ const BoardItem = ({ board, currentPage, isCurrentPost }: { board: Board; curren
       </div>
 
       <div className="hidden sm:flex items-center justify-center">
-        <span className="sm:text-sm text-xs text-gray-500 dark:text-gray-400">
+        <span className="sm:text-sm text-xs text-zinc-500 dark:text-zinc-400">
           {formatDate(board.createdAt)}
         </span>
       </div>

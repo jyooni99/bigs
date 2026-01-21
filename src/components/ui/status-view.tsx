@@ -13,7 +13,7 @@ const StatusView = ({ title, description, icon, children }: StatusViewProps) => 
       <div className="flex flex-col items-center justify-center">
         {icon}
         <h2 className="sm:text-2xl text-xl font-bold mt-4">{title}</h2>
-        <p className="sm:text-base text-sm text-gray-500 mt-2">{description}</p>
+        <p className="sm:text-base text-sm text-zinc-500 mt-2">{description}</p>
       </div>
       <div className="flex gap-6 items-center mt-6">{children}</div>
     </div>

@@ -69,7 +69,7 @@ export default function LoginForm() {
       </form>
 
       <div className="mt-4 text-center sm:text-sm text-xs">
-        <span className="text-gray-600 dark:text-gray-400">계정이 없으신가요? </span>
+        <span className="text-zinc-600 dark:text-zinc-400">계정이 없으신가요? </span>
         <Link
           href="/auth/signup"
           className="text-sky-600 dark:text-sky-400 hover:underline"

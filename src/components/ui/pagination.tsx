@@ -40,7 +40,7 @@ export default function Pagination({
               onClick={() => onPageChange(0)}
               className="size-7"
             >
-              <ChevronsLeft className="size-4 text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-500" />
+              <ChevronsLeft className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
             </Button>
 
             <Button
@@ -48,7 +48,7 @@ export default function Pagination({
             onClick={() => onPageChange(currentPage - 1)}
             className="size-7"
           >
-            <ChevronLeft className="size-4 text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-500" />
+            <ChevronLeft className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
           </Button>
         </>
         )
@@ -60,7 +60,7 @@ export default function Pagination({
             key={page}
             variant="none"
             onClick={() => onPageChange(page)}
-            className={cn("size-7 rounded-full", currentPage === page ? "bg-sky-500 text-white font-semibold" : "text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-500")}
+            className={cn("size-7 rounded-full", currentPage === page ? "bg-sky-500 dark:bg-sky-700 text-white font-semibold" : "text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500")}
           >
             {page + 1}
           </Button>
@@ -75,7 +75,7 @@ export default function Pagination({
               onClick={() => onPageChange(currentPage + 1)}
               className="size-7"
             >
-              <ChevronRight className="size-4 text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-500" />
+              <ChevronRight className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
             </Button>
 
             <Button
@@ -83,7 +83,7 @@ export default function Pagination({
               onClick={() => onPageChange(totalPages - 1)}
               className="size-7"
             >
-              <ChevronsRight className="size-4 text-gray-500 dark:text-gray-400 hover:text-sky-500 dark:hover:text-sky-500" />
+              <ChevronsRight className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
             </Button>
           </>
         )
