@@ -1,6 +1,6 @@
 export default function BoardDetailSkeleton() {
   return (
-    <div className="max-w-5xl mx-auto mt-4 sm:mt-6 md:mt-8 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-5xl mx-auto mt-8">
       {/* 제목 영역 스켈레톤 */}
       <div className="border-b-2 flex flex-col justify-between items-start border-gray-300 dark:border-gray-600 pb-2 sm:pb-3">
         <div className="flex w-full justify-between items-start gap-2 sm:gap-3">
