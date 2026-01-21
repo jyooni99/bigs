@@ -31,14 +31,16 @@ export default function FileUpload({
     handleUpload,
   } = useFileUpload({ name });
 
+  const fileInputId = id || name;
+
   return (
     <div className="flex flex-col gap-2">
-      {label && <Label text={label} required={required} htmlFor={name} />}
+      {label && <Label required={required} htmlFor={fileInputId}>{label}</Label>}
 
       <div className="relative">
         <input
           type="file"
-          id={id}
+          id={fileInputId}
           data-testid="file-input"
           accept="image/*"
           {...rest}

@@ -29,7 +29,7 @@ const Input = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <Label htmlFor={id} text={label} />
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <input
           id={id}

@@ -37,7 +37,7 @@ export default function CategorySelector({
 }: CategorySelectorProps) {
   return (
     <div>
-      <Label htmlFor="category" text="카테고리"/>
+      <Label htmlFor="category">카테고리</Label>
         
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
         {CATEGORIES.map((category) => {

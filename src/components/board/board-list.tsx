@@ -116,7 +116,7 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
       {
         showSize && (
           <div className="flex items-center justify-end gap-2">
-            <Label htmlFor="size-select" text="표시 개수:" />
+            <Label>표시 개수:</Label>
             <select
               id="size-select"
               value={size}
