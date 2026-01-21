@@ -34,18 +34,32 @@ export type ToastProps = VariantProps<typeof toastVariants> & {
   id: number;
   message: string;
   onRemove: (id: number) => void;
+  isRemoving: boolean;
 }
 
-const Toast = ({ id, message, variant, onRemove }: ToastProps) => {
+const Toast = ({ id, message, variant, isRemoving, onRemove }: ToastProps) => {
   const Icon = toastIconMap[variant || 'normal'];
+  const { setRemoving } = useToastStore();
+
+  const handleRemove = () => {
+    setRemoving(id);
+    setTimeout(() => {
+      onRemove(id);
+    }, 300);
+  };
   
   return (
-    <div className={cn(toastVariants({ variant }))}>
+    <div 
+      className={cn(
+        toastVariants({ variant }),
+        isRemoving ? "animate-slide-out" : "animate-slide-in"
+      )}
+    >
       <div className="flex items-center justify-start gap-2">
         <Icon className="size-5" />
         <span className="text-base font-bold">{message}</span>
       </div>
-      <Button variant="icon" size="icon" onClick={() => onRemove(id)}>
+      <Button variant="icon" size="icon" onClick={handleRemove}>
         <X className="size-4" />
       </Button>
     </div>
@@ -57,10 +71,17 @@ const ToastContainer = () => {
   const {toastList, removeToast} = useToastStore();
 
   return (
-    <div className="fixed bottom-20 right-5 p-4">
+    <div className="fixed bottom-20 right-5 flex flex-col gap-2">
       {
         toastList.map((toast) => (
-          <Toast key={toast.id} id={toast.id} message={toast.message} variant={toast.variant} onRemove={removeToast} />
+          <Toast 
+            key={toast.id} 
+            id={toast.id} 
+            message={toast.message} 
+            variant={toast.variant}
+            isRemoving={toast.isRemoving}
+            onRemove={removeToast} 
+          />
         ))
       }
     </div>
