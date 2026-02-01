@@ -1,4 +1,3 @@
-
 const Footer = () => {
   return (
     <footer className="py-8 text-center sm:text-sm text-xs text-zinc-500 border-t border-zinc-200 dark:border-zinc-800">

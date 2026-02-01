@@ -3,17 +3,18 @@ interface BoardListSkeletonProps {
   showSize?: boolean;
 }
 
-export default function BoardListSkeleton({ size = 10, showSize = true }: BoardListSkeletonProps) {
+export default function BoardListSkeleton({
+  size = 10,
+  showSize = true,
+}: BoardListSkeletonProps) {
   return (
     <div className="space-y-6 mb-8 mt-8">
-      {
-        showSize && (  
-          <div className="flex items-center justify-end gap-2">
-            <div className="h-4 w-20 bg-zinc-200 dark:bg-zinc-700 rounded animate-pulse" />
-            <div className="h-9 w-20 bg-zinc-200 dark:bg-zinc-700 rounded-lg animate-pulse" />
-          </div>
-        )
-      }
+      {showSize && (
+        <div className="flex items-center justify-end gap-2">
+          <div className="h-4 w-20 bg-zinc-200 dark:bg-zinc-700 rounded animate-pulse" />
+          <div className="h-9 w-20 bg-zinc-200 dark:bg-zinc-700 rounded-lg animate-pulse" />
+        </div>
+      )}
 
       {/* 테이블 스켈레톤 */}
       <div className="bg-white dark:bg-zinc-900 border-b-2 border-zinc-300 dark:border-zinc-700 overflow-hidden">
@@ -22,9 +23,7 @@ export default function BoardListSkeleton({ size = 10, showSize = true }: BoardL
           <div className="text-sm font-bold text-zinc-700 dark:text-zinc-300">
             카테고리
           </div>
-          <div className="text-sm font-bold text-zinc-700 dark:text-zinc-300">
-            제목
-          </div>
+          <div className="text-sm font-bold text-zinc-700 dark:text-zinc-300">제목</div>
           <div className="hidden sm:block text-sm font-bold text-zinc-700 dark:text-zinc-300 text-center">
             등록일
           </div>
@@ -47,7 +46,10 @@ export default function BoardListSkeleton({ size = 10, showSize = true }: BoardL
         {/* 페이지 번호들 */}
         <div className="flex gap-2">
           {Array.from({ length: 5 }).map((_, index) => (
-            <div key={index} className="h-7 w-7 bg-zinc-200 dark:bg-zinc-700 rounded-full animate-pulse" />
+            <div
+              key={index}
+              className="h-7 w-7 bg-zinc-200 dark:bg-zinc-700 rounded-full animate-pulse"
+            />
           ))}
         </div>
         {/* 다음 버튼 */}

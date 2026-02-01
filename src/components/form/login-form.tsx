@@ -27,7 +27,6 @@ export default function LoginForm() {
   };
 
   return (
-    
     <div className="max-w-md mx-auto sm:pt-10 pt-8">
       <h2 className="sm:text-2xl text-xl font-bold mb-6 text-center">로그인</h2>
 
@@ -78,7 +77,7 @@ export default function LoginForm() {
           className="text-sky-600 dark:text-sky-400 hover:underline"
           onMouseDown={(e) => {
             e.preventDefault();
-            router.push('/auth/signup');
+            router.push("/auth/signup");
           }}
         >
           회원가입
@@ -87,4 +86,3 @@ export default function LoginForm() {
     </div>
   );
 }
-

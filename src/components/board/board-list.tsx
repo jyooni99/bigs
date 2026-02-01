@@ -1,4 +1,4 @@
-import { boardsAPI } from "@/src/apis/board";
+import { useGetBoards } from "@/app/api/query";
 import BoardListSkeleton from "@/src/components/skeleton/board-list-skeleton";
 import Button from "@/src/components/ui/button";
 import Label from "@/src/components/ui/label";
@@ -6,7 +6,6 @@ import Pagination from "@/src/components/ui/pagination";
 import StatusView from "@/src/components/ui/status-view";
 import formatDate from "@/src/lib/formatter";
 import { Board } from "@/src/types/board";
-import { useQuery } from "@tanstack/react-query";
 import { AlertCircle, PenBox } from "lucide-react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Link from "next/link";
@@ -17,17 +16,27 @@ const DEFAULT_PAGE = 0;
 const DEFAULT_SIZE = 10;
 const SIZE_OPTIONS = [10, 20, 30];
 
-const CATEGORY_OPTIONS = { NOTICE: "공지사항", FREE: "자유게시판", QNA: "Q&A", ETC: "기타" } as const;
+const CATEGORY_OPTIONS = {
+  NOTICE: "공지사항",
+  FREE: "자유게시판",
+  QNA: "Q&A",
+  ETC: "기타",
+} as const;
 
 const getNumberParams = (params: URLSearchParams, key: string, defaultValue: number) => {
   const value = params.get(key);
   if (!value) return defaultValue;
 
-  const parsedValue  = parseInt(value);
+  const parsedValue = parseInt(value);
   return isNaN(parsedValue) || parsedValue < 0 ? defaultValue : parsedValue;
-}
+};
 
-const updateURL = (router: AppRouterInstance, page: number, size: number, redirectToHome: boolean = false) => {
+const updateURL = (
+  router: AppRouterInstance,
+  page: number,
+  size: number,
+  redirectToHome: boolean = false,
+) => {
   const params = new URLSearchParams();
 
   if (page > 0) params.set("page", page.toString());
@@ -36,7 +45,7 @@ const updateURL = (router: AppRouterInstance, page: number, size: number, redire
   const basePath = redirectToHome ? "/" : window.location.pathname;
   const newUrl = params.toString() ? `${basePath}?${params.toString()}` : basePath;
   router.push(newUrl, { scroll: false });
-}
+};
 
 interface BoardListProps {
   showSize?: boolean;
@@ -44,21 +53,23 @@ interface BoardListProps {
   currentPostId?: number;
 }
 
-const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: BoardListProps) => {
+const BoardList = ({
+  showSize = true,
+  redirectHome = false,
+  currentPostId,
+}: BoardListProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = getNumberParams(searchParams, "page", DEFAULT_PAGE);
   const size = getNumberParams(searchParams, "size", DEFAULT_SIZE);
 
-  const {data: boards, isLoading, isFetching, isError} = useQuery({
-    queryKey: ["boards", page, size],
-    queryFn: () => boardsAPI.getBoards(page, size),
-  });
+  // query를 훅으로 분리
+  const { data: boards, isLoading, isFetching, isError } = useGetBoards(page, size);
 
   useEffect(() => {
     if (!boards?.data) return;
 
-    const {totalPages} = boards.data;
+    const { totalPages } = boards.data;
     const isInvalidPage = page >= totalPages && totalPages > 0;
 
     if (isInvalidPage) {
@@ -69,12 +80,12 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
   const handlePageChange = (newPage: number) => {
     updateURL(router, newPage, size, redirectHome);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  };
 
   const handleSizeChange = (newSize: number) => {
     updateURL(router, DEFAULT_PAGE, newSize, redirectHome);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  };
 
   if (isLoading) return <BoardListSkeleton size={size} showSize={showSize} />;
 
@@ -86,12 +97,15 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
   if (isError) {
     return (
       <div className="pt-10">
-      <StatusView 
-        title="게시글 목록을 불러오는 중 오류가 발생했습니다." 
-        description="다시 시도해주세요." 
-        icon={<AlertCircle className="text-red-500 size-8" />}>
-        <Button variant="primaryOutline" size="lg" onClick={() => router.refresh()}>다시 시도</Button>
-      </StatusView>
+        <StatusView
+          title="게시글 목록을 불러오는 중 오류가 발생했습니다."
+          description="다시 시도해주세요."
+          icon={<AlertCircle className="text-red-500 size-8" />}
+        >
+          <Button variant="primaryOutline" size="lg" onClick={() => router.refresh()}>
+            다시 시도
+          </Button>
+        </StatusView>
       </div>
     );
   }
@@ -99,10 +113,11 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
   if (boards?.data?.content.length === 0) {
     return (
       <div className="pt-10">
-        <StatusView 
-          title="당신의 이야기를 기록해보세요" 
-          description="아래 버튼을 눌러 첫 게시글을 작성해보세요." 
-          icon={<PenBox className="size-8" />}>
+        <StatusView
+          title="당신의 이야기를 기록해보세요"
+          description="아래 버튼을 눌러 첫 게시글을 작성해보세요."
+          icon={<PenBox className="size-8" />}
+        >
           <Button variant="primaryOutline" size="lg" asChild>
             <Link href="/boards/create">게시글 작성</Link>
           </Button>
@@ -113,34 +128,32 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
 
   return (
     <div className="space-y-6 mb-8 mt-8">
-      {
-        showSize && (
-          <div className="flex items-center justify-end gap-2">
-            <Label>표시 개수:</Label>
-            <select
-              id="size-select"
-              value={size}
-              onChange={(e) => handleSizeChange(parseInt(e.target.value))}
-              className="px-3 py-1.5 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none"
-            >
-              {SIZE_OPTIONS.map((option) => (
-                <option key={option} value={option}>
-                  {option}개
-                </option>
-              ))}
-            </select>
-          </div>
-        )
-      }
+      {showSize && (
+        <div className="flex items-center justify-end gap-2">
+          <Label>표시 개수:</Label>
+          <select
+            id="size-select"
+            value={size}
+            onChange={(e) => handleSizeChange(parseInt(e.target.value))}
+            className="px-3 py-1.5 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none"
+          >
+            {SIZE_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}개
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       <div className="bg-white dark:bg-zinc-900 border-b-2 border-zinc-300 dark:border-zinc-700 overflow-hidden">
         <BoardTableHeader />
         <div>
           {boards?.data.content.map((board) => (
-            <BoardItem 
-              key={board.id} 
-              board={board} 
-              currentPage={page} 
+            <BoardItem
+              key={board.id}
+              board={board}
+              currentPage={page}
               isCurrentPost={currentPostId === board.id}
             />
           ))}
@@ -154,34 +167,39 @@ const BoardList = ({ showSize = true, redirectHome = false, currentPostId }: Boa
       />
     </div>
   );
-}
+};
 
 const BoardTableHeader = () => {
   return (
     <div className="grid sm:grid-cols-[120px_1fr_150px] grid-cols-[90px_1fr] gap-4 sm:px-6 px-1 py-4 text-center border-t-2 border-zinc-300 border-b-2 dark:border-zinc-700">
-      <div className="text-sm font-bold text-zinc-700 dark:text-zinc-300">
-        카테고리
-      </div>
-      <div className="text-sm font-bold text-zinc-700 dark:text-zinc-300">
-        제목
-      </div>
+      <div className="text-sm font-bold text-zinc-700 dark:text-zinc-300">카테고리</div>
+      <div className="text-sm font-bold text-zinc-700 dark:text-zinc-300">제목</div>
       <div className="hidden sm:block text-sm font-bold text-zinc-700 dark:text-zinc-300 text-center">
         등록일
       </div>
     </div>
   );
-}
+};
 
-const BoardItem = ({ board, currentPage, isCurrentPost }: { board: Board; currentPage?: number; isCurrentPost?: boolean }) => {
-  const href = currentPage !== undefined && currentPage > 0 
-    ? `/boards/${board.id}?page=${currentPage}` 
-    : `/boards/${board.id}`;
-    
+const BoardItem = ({
+  board,
+  currentPage,
+  isCurrentPost,
+}: {
+  board: Board;
+  currentPage?: number;
+  isCurrentPost?: boolean;
+}) => {
+  const href =
+    currentPage !== undefined && currentPage > 0
+      ? `/boards/${board.id}?page=${currentPage}`
+      : `/boards/${board.id}`;
+
   return (
     <Link
       href={href}
       className={`group grid sm:grid-cols-[120px_1fr_150px] grid-cols-[90px_1fr] gap-4 sm:px-6 px-1 py-4 border-b border-zinc-200 dark:border-zinc-700 last:border-b-0 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors ${
-        isCurrentPost ? 'bg-sky-50/50 dark:bg-sky-950/30' : ''
+        isCurrentPost ? "bg-sky-50/50 dark:bg-sky-950/30" : ""
       }`}
     >
       <div className="flex items-center justify-center">
@@ -191,9 +209,11 @@ const BoardItem = ({ board, currentPage, isCurrentPost }: { board: Board; curren
       </div>
 
       <div className="flex items-center justify-start">
-        <h3 className={`text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors truncate ${
-          isCurrentPost ? 'font-semibold text-sky-600 dark:text-sky-400' : ''
-        }`}>
+        <h3
+          className={`text-sm text-zinc-900 dark:text-zinc-100 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors truncate ${
+            isCurrentPost ? "font-semibold text-sky-600 dark:text-sky-400" : ""
+          }`}
+        >
           {board.title}
         </h3>
       </div>
@@ -205,6 +225,6 @@ const BoardItem = ({ board, currentPage, isCurrentPost }: { board: Board; curren
       </div>
     </Link>
   );
-}
+};
 
 export default BoardList;

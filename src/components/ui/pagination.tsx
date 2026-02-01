@@ -13,7 +13,6 @@ export default function Pagination({
   totalPages,
   onPageChange,
 }: PaginationProps) {
-
   const getPageNumbers = () => {
     const maxVisible = 5;
     const currentGroup = Math.floor(currentPage / maxVisible);
@@ -32,18 +31,13 @@ export default function Pagination({
 
   return (
     <div className="flex items-center justify-center gap-2 mt-8 sm:text-sm text-xs">
-      {
-        currentPage !== 0 && (
-          <>
-            <Button
-              variant="none"
-              onClick={() => onPageChange(0)}
-              className="size-7"
-            >
-              <ChevronsLeft className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
-            </Button>
+      {currentPage !== 0 && (
+        <>
+          <Button variant="none" onClick={() => onPageChange(0)} className="size-7">
+            <ChevronsLeft className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
+          </Button>
 
-            <Button
+          <Button
             variant="none"
             onClick={() => onPageChange(currentPage - 1)}
             className="size-7"
@@ -51,8 +45,7 @@ export default function Pagination({
             <ChevronLeft className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
           </Button>
         </>
-        )
-      }
+      )}
 
       <div className="flex gap-2">
         {getPageNumbers().map((page) => (
@@ -60,35 +53,37 @@ export default function Pagination({
             key={page}
             variant="none"
             onClick={() => onPageChange(page)}
-            className={cn("size-7 rounded-full", currentPage === page ? "bg-sky-500 dark:bg-sky-700 text-white font-semibold" : "text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500")}
+            className={cn(
+              "size-7 rounded-full",
+              currentPage === page
+                ? "bg-sky-500 dark:bg-sky-700 text-white font-semibold"
+                : "text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500",
+            )}
           >
             {page + 1}
           </Button>
         ))}
       </div>
 
-      {
-        currentPage !== totalPages - 1 && (
-          <>
-            <Button
-              variant="none"
-              onClick={() => onPageChange(currentPage + 1)}
-              className="size-7"
-            >
-              <ChevronRight className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
-            </Button>
+      {currentPage !== totalPages - 1 && (
+        <>
+          <Button
+            variant="none"
+            onClick={() => onPageChange(currentPage + 1)}
+            className="size-7"
+          >
+            <ChevronRight className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
+          </Button>
 
-            <Button
-              variant="none"
-              onClick={() => onPageChange(totalPages - 1)}
-              className="size-7"
-            >
-              <ChevronsRight className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
-            </Button>
-          </>
-        )
-      }
+          <Button
+            variant="none"
+            onClick={() => onPageChange(totalPages - 1)}
+            className="size-7"
+          >
+            <ChevronsRight className="size-4 text-zinc-500 dark:text-zinc-400 hover:text-sky-500 dark:hover:text-sky-500" />
+          </Button>
+        </>
+      )}
     </div>
   );
 }
-

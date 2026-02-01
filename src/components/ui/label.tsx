@@ -15,4 +15,3 @@ export default function Label({ required = false, htmlFor, children }: LabelProp
     </label>
   );
 }
-

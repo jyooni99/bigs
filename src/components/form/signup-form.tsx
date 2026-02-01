@@ -110,7 +110,7 @@ export default function SignupForm() {
           className="text-sky-600 dark:text-sky-400 hover:underline"
           onMouseDown={(e) => {
             e.preventDefault();
-            router.push('/auth/login');
+            router.push("/auth/login");
           }}
         >
           로그인
@@ -119,4 +119,3 @@ export default function SignupForm() {
     </div>
   );
 }
-

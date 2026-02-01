@@ -1,26 +1,29 @@
 "use client";
 
-import { cn } from '@/src/lib/cn';
-import { Toast as ToastType, useToastStore } from '@/src/stores/toast-store';
-import { cva } from 'class-variance-authority';
-import { Check, Info, X } from 'lucide-react';
-import Button from './button';
+import { cn } from "@/src/lib/cn";
+import { Toast as ToastType, useToastStore } from "@/src/stores/toast-store";
+import { cva } from "class-variance-authority";
+import { Check, Info, X } from "lucide-react";
+import Button from "./button";
 
 const toastVariants = cva(
   "flex items-center justify-between gap-2 p-4 bg-white dark:bg-zinc-900 z-50",
   {
     variants: {
       variant: {
-        success: "border border-l-5 border-sky-500 text-sky-500 dark:border-sky-700 dark:text-sky-700",
-        error: "border border-l-5 border-red-600 text-red-600 dark:border-red-700 dark:text-red-700",
-        normal: "border border-l-5 border-zinc-300 dark:border-zinc-600 text-zinc-500 dark:text-zinc-300",
+        success:
+          "border border-l-5 border-sky-500 text-sky-500 dark:border-sky-700 dark:text-sky-700",
+        error:
+          "border border-l-5 border-red-600 text-red-600 dark:border-red-700 dark:text-red-700",
+        normal:
+          "border border-l-5 border-zinc-300 dark:border-zinc-600 text-zinc-500 dark:text-zinc-300",
       },
     },
     defaultVariants: {
       variant: "normal",
     },
-  }
-)
+  },
+);
 
 const toastIconMap = {
   success: Check,
@@ -43,12 +46,12 @@ const Toast = ({ toast }: ToastProps) => {
       removeToast(id);
     }, 300);
   };
-  
+
   return (
-    <div 
+    <div
       className={cn(
         toastVariants({ variant }),
-        isRemoving ? "animate-slide-out" : "animate-slide-in"
+        isRemoving ? "animate-slide-out" : "animate-slide-in",
       )}
     >
       <div className="flex items-center justify-start gap-2">
@@ -59,8 +62,8 @@ const Toast = ({ toast }: ToastProps) => {
         <X className="size-4" />
       </Button>
     </div>
-  )
-}
+  );
+};
 
 const ToastContainer = () => {
   const { toastList } = useToastStore();
@@ -71,8 +74,7 @@ const ToastContainer = () => {
         <Toast key={toast.id} toast={toast} />
       ))}
     </div>
-  )
-}
+  );
+};
 
 export { Toast, ToastContainer };
-

@@ -83,69 +83,63 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
           </h1>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          <CategorySelector
-            value={selectedCategory}
-            onChange={(category) =>
-              setValue("category", category, { shouldValidate: true })
-            }
-            errorMessage={errors.category?.message}
-          />
+            <CategorySelector
+              value={selectedCategory}
+              onChange={(category) =>
+                setValue("category", category, { shouldValidate: true })
+              }
+              errorMessage={errors.category?.message}
+            />
 
-          <Input
-            id="title"
-            label="제목"
-            autoFocus
-            {...register("title")}
-            errorMessage={errors.title?.message}
-            placeholder="게시글 제목을 입력하세요"
-          />
+            <Input
+              id="title"
+              label="제목"
+              autoFocus
+              {...register("title")}
+              errorMessage={errors.title?.message}
+              placeholder="게시글 제목을 입력하세요"
+            />
 
-          <TextArea
-            id="content"
-            label="내용"
-            rows={15}
-            {...register("content")}
-            errorMessage={errors.content?.message}
-            placeholder="게시글 내용을 입력하세요"
-          />
+            <TextArea
+              id="content"
+              label="내용"
+              rows={15}
+              {...register("content")}
+              errorMessage={errors.content?.message}
+              placeholder="게시글 내용을 입력하세요"
+            />
 
-          <FileUpload
-            id="file-upload"
-            name="file"
-            label="파일 첨부"
-          />
+            <FileUpload id="file-upload" name="file" label="파일 첨부" />
 
-          {errors.file?.message && (
-            <p className="text-sm text-red-600 dark:text-red-400">
-              {errors.file.message}
-            </p>
-          )}
+            {errors.file?.message && (
+              <p className="text-sm text-red-600 dark:text-red-400">
+                {errors.file.message}
+              </p>
+            )}
 
-          
-
-          <div className="flex justify-end gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-700">
-            <Button variant="secondaryOutline" size="lg" asChild>
-              <Link
-                href={backLink}
+            <div className="flex justify-end gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-700">
+              <Button variant="secondaryOutline" size="lg" asChild>
+                <Link href={backLink}>취소</Link>
+              </Button>
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                className="w-[140px] font-semibold"
+                disabled={
+                  !isValid || createMutation.isPending || updateMutation.isPending
+                }
               >
-                취소
-              </Link>
-            </Button>
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              className="w-[140px] font-semibold"
-              disabled={!isValid || createMutation.isPending || updateMutation.isPending}
-            >
-              {(createMutation.isPending || updateMutation.isPending) 
-                ? "처리 중..." 
-                : isEditMode ? "수정 완료" : "게시글 등록"}
-            </Button>
-          </div>
-        </form>
+                {createMutation.isPending || updateMutation.isPending
+                  ? "처리 중..."
+                  : isEditMode
+                    ? "수정 완료"
+                    : "게시글 등록"}
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
     </FormProvider>
   );
 }

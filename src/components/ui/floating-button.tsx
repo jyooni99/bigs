@@ -1,6 +1,6 @@
-import { PenBox } from 'lucide-react';
-import Link from 'next/link';
-import Button from './button';
+import { PenBox } from "lucide-react";
+import Link from "next/link";
+import Button from "./button";
 
 export default function FloatingActionButton() {
   return (
@@ -16,4 +16,3 @@ export default function FloatingActionButton() {
     </Button>
   );
 }
-

@@ -18,7 +18,7 @@ interface ToastStore {
 
 export const useToastStore = create<ToastStore>()((set) => ({
   toastList: [],
-  
+
   addToast: (message, variant = "normal") => {
     const id = Date.now();
     const newToast: Toast = {
@@ -28,36 +28,37 @@ export const useToastStore = create<ToastStore>()((set) => ({
       isRemoving: false,
     };
 
-    set((state) => ({ 
-      toastList: [...state.toastList, newToast] 
+    set((state) => ({
+      toastList: [...state.toastList, newToast],
     }));
-    
+
+    //??: 컴포넌트 언마운트 될 때 타이머 정리가 되면 페이지 이동할 때에도 정리가 되는 것 아닌지?
     setTimeout(() => {
-      set((state) => ({ 
-        toastList: state.toastList.map((t) => 
-          t.id === id ? { ...t, isRemoving: true } : t
-        )
+      set((state) => ({
+        toastList: state.toastList.map((t) =>
+          t.id === id ? { ...t, isRemoving: true } : t,
+        ),
       }));
-      
+
       setTimeout(() => {
-        set((state) => ({ 
-          toastList: state.toastList.filter((t) => t.id !== id) 
+        set((state) => ({
+          toastList: state.toastList.filter((t) => t.id !== id),
         }));
       }, 300);
     }, 3700);
   },
 
   setRemoving: (id) => {
-    set((state) => ({ 
-      toastList: state.toastList.map((t) => 
-        t.id === id ? { ...t, isRemoving: true } : t
-      )
+    set((state) => ({
+      toastList: state.toastList.map((t) =>
+        t.id === id ? { ...t, isRemoving: true } : t,
+      ),
     }));
   },
 
   removeToast: (id) => {
-    set((state) => ({ 
-      toastList: state.toastList.filter((toast) => toast.id !== id) 
+    set((state) => ({
+      toastList: state.toastList.filter((toast) => toast.id !== id),
     }));
   },
 }));

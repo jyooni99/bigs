@@ -1,11 +1,6 @@
 import { privateApi } from "@/src/apis/api";
 import { CreateBoardRequest, UpdateBoardRequest } from "@/src/schemas/board";
-import {
-  BoardDetail,
-  BoardsResponse,
-  Categories,
-} from "@/src/types/board";
-
+import { BoardDetail, BoardsResponse, Categories } from "@/src/types/board";
 
 export const boardsAPI = {
   getBoards: (page: number = 0, size: number = 10) =>
@@ -19,7 +14,7 @@ export const boardsAPI = {
     const formData = new FormData();
     formData.append(
       "request",
-      new Blob([JSON.stringify(request)], { type: "application/json" })
+      new Blob([JSON.stringify(request)], { type: "application/json" }),
     );
 
     if (file) {
@@ -35,7 +30,7 @@ export const boardsAPI = {
 
     formData.append(
       "request",
-      new Blob([JSON.stringify(request)], { type: "application/json" })
+      new Blob([JSON.stringify(request)], { type: "application/json" }),
     );
 
     if (file) {

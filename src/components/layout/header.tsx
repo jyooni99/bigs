@@ -11,7 +11,10 @@ export default function Header() {
   return (
     <header className="bg-white dark:bg-zinc-900 w-full border-b border-zinc-200 dark:border-zinc-800 fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="text-xl sm:text-2xl font-black hover:text-sky-500 dark:hover:text-sky-700 transition-all">
+        <Link
+          href="/"
+          className="text-xl sm:text-2xl font-black hover:text-sky-500 dark:hover:text-sky-700 transition-all"
+        >
           BigsBoard
         </Link>
 

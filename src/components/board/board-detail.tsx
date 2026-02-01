@@ -13,7 +13,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import FloatingActionButton from "../ui/floating-button";
 
-
 interface BoardDetailProps {
   id: number;
 }
@@ -24,18 +23,23 @@ export default function BoardDetail({ id }: BoardDetailProps) {
   const { data: board, isLoading, isFetching, isError } = useGetBoard(id);
 
   if (isLoading) return <BoardDetailSkeleton />;
-  
+
   if (isFetching && !board?.data) return <BoardDetailSkeleton />;
-  
-  if (isError || !board?.data) return (
-    <div className="max-w-5xl mx-auto sm:pt-10 pt-8">
-      <StatusView title="게시글을 찾을 수 없습니다." description="해당 게시글을 찾을 수 없습니다." icon={<AlertCircle className="text-red-500 size-8" />}>
-        <Button variant="secondaryOutline" size="lg" asChild>
-          <Link href="/">목록으로</Link>
-        </Button>
-      </StatusView>
-    </div>
-  );
+
+  if (isError || !board?.data)
+    return (
+      <div className="max-w-5xl mx-auto sm:pt-10 pt-8">
+        <StatusView
+          title="게시글을 찾을 수 없습니다."
+          description="해당 게시글을 찾을 수 없습니다."
+          icon={<AlertCircle className="text-red-500 size-8" />}
+        >
+          <Button variant="secondaryOutline" size="lg" asChild>
+            <Link href="/">목록으로</Link>
+          </Button>
+        </StatusView>
+      </div>
+    );
 
   // 이미지 URL 처리: 상대 경로인 경우 백엔드 서버 URL을 붙임
   const getImageUrl = (imageUrl: string | undefined) => {
@@ -64,7 +68,11 @@ export default function BoardDetail({ id }: BoardDetailProps) {
               >
                 수정
               </Button>
-              <Button variant="primaryOutline" size="sm" onClick={() => handleDeleteBoard(id)}>
+              <Button
+                variant="primaryOutline"
+                size="sm"
+                onClick={() => handleDeleteBoard(id)}
+              >
                 삭제
               </Button>
             </div>

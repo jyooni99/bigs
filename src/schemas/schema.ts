@@ -36,4 +36,4 @@ export const category = z.enum(["NOTICE", "FREE", "QNA", "ETC"]);
 export const file = z
   .union([z.instanceof(File), z.string()])
   .nullable()
-  .optional()
+  .optional();
