@@ -6,9 +6,6 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
 });
 
 export const privateApi = axios.create({
@@ -19,10 +16,6 @@ privateApi.interceptors.request.use((config) => {
   const token = useAuthStore.getState().accessToken;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
-  }
-
-  if (!(config.data instanceof FormData)) {
-    config.headers["Content-Type"] = "application/json";
   }
 
   return config;
@@ -77,5 +70,12 @@ privateApi.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
+
+/**
+ * axios는 기본적으로 plain object면 Content-Type: application/json을 자동으로 설정
+ * FormData도 마찬가지로 Content-Type이 설정되어있지 않을 경우 브라우저에서 자동으로 multipart/form-data를 자동으로 설정해줌
+ *
+ * 따라서 Content-Type을 설정하는 로직을 제거
+ */
