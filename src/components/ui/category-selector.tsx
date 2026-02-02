@@ -30,11 +30,11 @@ interface CategorySelectorProps {
   iconSize?: number;
 }
 
-export default function CategorySelector({
+const CategorySelector = ({
   value,
   onChange,
   errorMessage,
-}: CategorySelectorProps) {
+}: CategorySelectorProps) => {
   return (
     <div>
       <Label htmlFor="category">카테고리</Label>
@@ -84,4 +84,6 @@ export default function CategorySelector({
       )}
     </div>
   );
-}
+};
+
+export default CategorySelector;

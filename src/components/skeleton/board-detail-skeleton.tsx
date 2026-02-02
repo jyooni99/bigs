@@ -1,4 +1,4 @@
-export default function BoardDetailSkeleton() {
+const BoardDetailSkeleton = () => {
   return (
     <div className="max-w-5xl mx-auto mt-8">
       {/* 제목 영역 스켈레톤 */}
@@ -60,4 +60,6 @@ export default function BoardDetailSkeleton() {
       </div>
     </div>
   );
-}
+};
+
+export default BoardDetailSkeleton;

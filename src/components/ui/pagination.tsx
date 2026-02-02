@@ -8,11 +8,11 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({
+const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
-}: PaginationProps) {
+}: PaginationProps) => {
   const getPageNumbers = () => {
     const maxVisible = 5;
     const currentGroup = Math.floor(currentPage / maxVisible);
@@ -86,4 +86,6 @@ export default function Pagination({
       )}
     </div>
   );
-}
+};
+
+export default Pagination;

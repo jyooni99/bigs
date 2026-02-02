@@ -17,7 +17,7 @@ interface BoardDetailProps {
   id: number;
 }
 
-export default function BoardDetail({ id }: BoardDetailProps) {
+const BoardDetail = ({ id }: BoardDetailProps) => {
   const router = useRouter();
   const deleteMutation = useDeleteBoard();
   const { data: board, isLoading, isFetching, isError } = useGetBoard(id);
@@ -109,4 +109,6 @@ export default function BoardDetail({ id }: BoardDetailProps) {
       <FloatingActionButton />
     </>
   );
-}
+};
+
+export default BoardDetail;

@@ -9,7 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FileX } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 
-export default function BoardEditForm() {
+const BoardEditForm = () => {
   const router = useRouter();
   const params = useParams();
   const boardId = Number(params.id);
@@ -41,4 +41,6 @@ export default function BoardEditForm() {
   }
 
   return <BoardForm mode="edit" boardId={boardId} initialData={board} />;
-}
+};
+
+export default BoardEditForm;

@@ -1,4 +1,4 @@
-export default function BoardFormSkeleton() {
+const BoardFormSkeleton = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="bg-white dark:bg-zinc-900 rounded-lg p-4 sm:p-6 md:p-8">
@@ -55,4 +55,6 @@ export default function BoardFormSkeleton() {
       </div>
     </div>
   );
-}
+};
+
+export default BoardFormSkeleton;

@@ -3,10 +3,10 @@ interface BoardListSkeletonProps {
   showSize?: boolean;
 }
 
-export default function BoardListSkeleton({
+const BoardListSkeleton = ({
   size = 10,
   showSize = true,
-}: BoardListSkeletonProps) {
+}: BoardListSkeletonProps) => {
   return (
     <div className="space-y-6 mb-8 mt-8">
       {showSize && (
@@ -59,9 +59,9 @@ export default function BoardListSkeleton({
       </div>
     </div>
   );
-}
+};
 
-function BoardItemSkeleton() {
+const BoardItemSkeleton = () => {
   return (
     <div className="grid sm:grid-cols-[120px_1fr_150px] grid-cols-[90px_1fr] gap-4 sm:px-6 px-1 py-4 border-b border-zinc-200 dark:border-zinc-700 last:border-b-0 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors">
       {/* 카테고리 */}
@@ -80,4 +80,6 @@ function BoardItemSkeleton() {
       </div>
     </div>
   );
-}
+};
+
+export default BoardListSkeleton;

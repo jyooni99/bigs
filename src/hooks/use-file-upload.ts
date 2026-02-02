@@ -21,10 +21,6 @@ export const useFileUpload = ({ name }: UseFileUploadProps) => {
       setPreview(null);
       return;
     }
-    
-    // ?? : URL.createObjectURL은 메모리에 객체 URL 생성하기 떄문에 여러 이미지를 불러올 경우
-    // 메모리에 객체 URL이 쌓이면서 메모리 누수가 발생함
-    // 따라서 파일을 새로 추가하면 cleanup 함수로 revokeObjectURL을 호출하면서 기존 객체 URL을 제거
 
     if (fileValue instanceof File) {
       const blobUrl = URL.createObjectURL(fileValue);
@@ -34,8 +30,8 @@ export const useFileUpload = ({ name }: UseFileUploadProps) => {
 
     if (typeof fileValue === "string") {
       // 상대 경로인 경우 백엔드 URL 추가
-      const previewUrl = fileValue.startsWith("http") 
-        ? fileValue 
+      const previewUrl = fileValue.startsWith("http")
+        ? fileValue
         : `${process.env.NEXT_PUBLIC_API_URL}${fileValue}`;
       setPreview(previewUrl);
     }
@@ -67,3 +63,8 @@ export const useFileUpload = ({ name }: UseFileUploadProps) => {
   };
 };
 
+/**
+ * createObjectURL은 메모리에 객체 URL 생성하기 떄문에
+ * revokeObjectURL을 호출하여 기존 객체 URL을 제거해야 메모리 누수를 방지할 수 있음
+ * fileValue가 변경될 때마다 (파일을 업로드할 때마다) cleanup 함수를 호출하여 기존 객체 URL을 제거하도록 함
+ */

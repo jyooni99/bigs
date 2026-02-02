@@ -5,7 +5,7 @@ import { useAuthStore } from "@/src/stores/auth-store";
 import { User } from "@/src/types/auth";
 import Link from "next/link";
 
-export default function Header() {
+const Header = () => {
   const { user, logout, hasHydrated } = useAuthStore();
 
   return (
@@ -30,7 +30,7 @@ export default function Header() {
       </div>
     </header>
   );
-}
+};
 
 const UserInfo = ({ user, logout }: { user: User; logout: () => void }) => {
   return (
@@ -57,3 +57,5 @@ const LoginButton = () => {
     </Button>
   );
 };
+
+export default Header;

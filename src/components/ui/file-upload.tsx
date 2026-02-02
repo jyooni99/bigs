@@ -14,13 +14,13 @@ interface FileUploadProps extends ComponentProps<"input"> {
   previewClassName?: string;
 }
 
-export default function FileUpload({
+const FileUpload = ({
   id,
   label,
   name,
   required = false,
   previewClassName,
-}: FileUploadProps) {
+}: FileUploadProps) => {
   const {
     hiddenInputRef,
     preview,
@@ -104,4 +104,6 @@ export default function FileUpload({
       </div>
     </div>
   );
-}
+};
+
+export default FileUpload;

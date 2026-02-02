@@ -2,7 +2,7 @@ import { PenBox } from "lucide-react";
 import Link from "next/link";
 import Button from "./button";
 
-export default function FloatingActionButton() {
+const FloatingActionButton = () => {
   return (
     <Button
       asChild
@@ -15,4 +15,6 @@ export default function FloatingActionButton() {
       </Link>
     </Button>
   );
-}
+};
+
+export default FloatingActionButton;

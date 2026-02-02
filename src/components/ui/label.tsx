@@ -4,7 +4,7 @@ interface LabelProps {
   children: React.ReactNode;
 }
 
-export default function Label({ required = false, htmlFor, children }: LabelProps) {
+const Label = ({ required = false, htmlFor, children }: LabelProps) => {
   return (
     <label
       htmlFor={htmlFor}
@@ -14,4 +14,6 @@ export default function Label({ required = false, htmlFor, children }: LabelProp
       {required && <span className="text-red-500 ml-1">*</span>}
     </label>
   );
-}
+};
+
+export default Label;

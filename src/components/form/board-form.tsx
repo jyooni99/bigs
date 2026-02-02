@@ -24,7 +24,7 @@ interface BoardFormProps {
   initialData?: BoardDetail;
 }
 
-export default function BoardForm({ mode, boardId, initialData }: BoardFormProps) {
+const BoardForm = ({ mode, boardId, initialData }: BoardFormProps) => {
   const isEditMode = mode === "edit";
   const schema = isEditMode ? updateBoardSchema : createBoardSchema;
 
@@ -142,4 +142,6 @@ export default function BoardForm({ mode, boardId, initialData }: BoardFormProps
       </div>
     </FormProvider>
   );
-}
+};
+
+export default BoardForm;

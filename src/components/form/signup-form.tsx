@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-export default function SignupForm() {
+const SignupForm = () => {
   const router = useRouter();
   const signupMutation = useSignup();
 
@@ -118,4 +118,6 @@ export default function SignupForm() {
       </div>
     </div>
   );
-}
+};
+
+export default SignupForm;
